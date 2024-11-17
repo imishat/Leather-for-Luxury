@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Leather for Luxury\\logs\\winston\\errors\\.57243cf3b15e3104c266e458ad469140ddd78730-audit.json",
+    "files": [
+        {
+            "date": 1731877339916,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-18-11-03-error.log",
+            "hash": "7c78d6f158189dc70f75cd353aec6e3af74dd3c153262aa5e96e88c17597e143"
+        }
+    ],
+    "hashType": "sha256"
+}
