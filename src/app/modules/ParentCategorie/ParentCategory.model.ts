@@ -23,7 +23,7 @@ ParentCategorySchema.pre("save", function (next) {
   }
   next();
 });
-
+// 673d1ef982066e805601a75d
 // Transform output to include `id` and remove `_id` and `__v`
 ParentCategorySchema.set("toJSON", {
   virtuals: true,
@@ -32,15 +32,7 @@ ParentCategorySchema.set("toJSON", {
     delete ret._id;
   },
 });
-// ParentCategorySchema.pre("save", function (next) {
-//   if (this.isModified("name") || this.isNew) {
-//     this.slug = slugify(this.name, {
-//       lower: true, // Convert to lowercase
-//       strict: true, // Remove special characters
-//     });
-//   }
-//   next();
-// });
+
 ParentCategorySchema.pre("save", async function (next) {
   if (this.isModified("name") || this.isNew) {
     // Generate base slug
