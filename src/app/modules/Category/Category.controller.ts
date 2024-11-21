@@ -1,30 +1,28 @@
 import { catchAsync } from "../../shared/catchAsync";
 
 import httpStatus from "http-status";
-import { ParentCategoryService } from "./ParentCategory.service";
+import { CategoryService } from "./Category.service";
 
 import sendResponse from "../../shared/sendResponse ";
 import { Response } from "express";
 import ApiError from "../../errors/ApiError";
 
-const createParentCategory = catchAsync(
+const createCategory = catchAsync(
   async (req: { body: any }, res: Response<any, Record<string, any>>) => {
-    const parentCategory = req.body;
+    const Category = req.body;
 
-    const result = await ParentCategoryService.createParentCategory(
-      parentCategory
-    );
+    const result = await CategoryService.createCategory(Category);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "parent-category is created successfully",
+      message: "Category is created successfully",
       data: result,
     });
   }
 );
 
-const getSingleParentCategoryBySlug = catchAsync(async (req, res) => {
+const getSingleCategoryBySlug = catchAsync(async (req, res) => {
   const { slug } = req.params; // Destructure 'slug' from req.params
 
   // Log slug for debugging
@@ -36,87 +34,87 @@ const getSingleParentCategoryBySlug = catchAsync(async (req, res) => {
   }
 
   // Fetch the category by slug
-  const result = await ParentCategoryService.getSingleBySlug(slug);
+  const result = await CategoryService.getSingleBySlug(slug);
 
   // Handle the case where the category does not exist
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Parent category not found");
+    throw new ApiError(httpStatus.NOT_FOUND, " Category not found");
   }
 
   // Send the successful response
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Parent category retrieved successfully",
+    message: " Category retrieved successfully",
     data: result,
   });
 });
-const getSingleParentCategoryById = catchAsync(async (req, res) => {
+const getSingleCategoryById = catchAsync(async (req, res) => {
   console.log(req.params.id);
   const id = req.params.id;
 
-  const result = await ParentCategoryService.getSingleById(id);
+  const result = await CategoryService.getSingleById(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "parent-category is retrieved successfully",
+    message: "Category is retrieved successfully",
     data: result,
   });
 });
 
-export const updateParentCategoryById = catchAsync(
+export const updateCategoryById = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params; // Extract ID from request parameters
     const updateData = req.body; // Extract update payload from request body
 
     // Perform the update operation
-    const updatedCategory = await ParentCategoryService.updateParentCategoryId(
+    const updatedCategory = await CategoryService.updateCategoryId(
       id,
       updateData
     );
 
     // Handle case where the category is not found
     if (!updatedCategory) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Parent category not found");
+      throw new ApiError(httpStatus.NOT_FOUND, " Category not found");
     }
 
     // Send a successful response
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Parent category updated successfully",
+      message: " Category updated successfully",
       data: updatedCategory,
     });
   }
 );
 
 const getAll = catchAsync(async (req, res) => {
-  const result = await ParentCategoryService.getAll();
+  const result = await CategoryService.getAll();
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Parent category updated successfully",
+    message: "Category updated successfully",
     data: result,
   });
 });
-const deleteParentCategory = catchAsync(async (req, res) => {
+const deleteCategory = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await ParentCategoryService.deleteParentCategoryFromDB(id);
+  const result = await CategoryService.deleteCategoryFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Parent-Category is deleted successfully",
+    message: "Category is deleted successfully",
     data: result,
   });
 });
 
-export const ParentCategoryController = {
-  createParentCategory,
-  getSingleParentCategoryBySlug,
-  getSingleParentCategoryById,
-  updateParentCategoryById,
+export const CategoryController = {
+  createCategory,
+  getSingleCategoryBySlug,
+  getSingleCategoryById,
+  updateCategoryById,
   getAll,
-  deleteParentCategory,
+  deleteCategory,
 };
