@@ -47,6 +47,16 @@ const getAll = async () => {
   const result = await ParentCategory.find().sort({ createdAt: -1 });
   return result;
 };
+const deleteParentCategoryFromDB = async (id: string) => {
+  const result = await ParentCategory.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    {
+      new: true,
+    }
+  );
+  return result;
+};
 
 export const ParentCategoryService = {
   createParentCategory,
@@ -54,4 +64,5 @@ export const ParentCategoryService = {
   getSingleById,
   updateParentCategoryId,
   getAll,
+  deleteParentCategoryFromDB,
 };

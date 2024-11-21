@@ -1,30 +1,28 @@
 import { catchAsync } from "../../shared/catchAsync";
 
 import httpStatus from "http-status";
-import { ParentCategoryService } from "./ParentCategory.service";
+import { ProductService } from "./Product.service";
 
 import sendResponse from "../../shared/sendResponse ";
 import { Response } from "express";
 import ApiError from "../../errors/ApiError";
 
-const createParentCategory = catchAsync(
+const createProduct = catchAsync(
   async (req: { body: any }, res: Response<any, Record<string, any>>) => {
-    const parentCategory = req.body;
+    const product = req.body;
 
-    const result = await ParentCategoryService.createParentCategory(
-      parentCategory
-    );
+    const result = await ProductService.createProduct(product);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "parent-category is created successfully",
+      message: "Product is created successfully",
       data: result,
     });
   }
 );
 
-const getSingleParentCategoryBySlug = catchAsync(async (req, res) => {
+const getSingleProductBySlug = catchAsync(async (req, res) => {
   const { slug } = req.params; // Destructure 'slug' from req.params
 
   // Log slug for debugging
@@ -36,87 +34,88 @@ const getSingleParentCategoryBySlug = catchAsync(async (req, res) => {
   }
 
   // Fetch the category by slug
-  const result = await ParentCategoryService.getSingleBySlug(slug);
+  const result = await ProductService.getSingleBySlug(slug);
 
   // Handle the case where the category does not exist
   if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Parent category not found");
+    throw new ApiError(httpStatus.NOT_FOUND, "Product not found");
   }
 
   // Send the successful response
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Parent category retrieved successfully",
+    message: "Product  retrieved successfully",
     data: result,
   });
 });
-const getSingleParentCategoryById = catchAsync(async (req, res) => {
+const getSingleProductById = catchAsync(async (req, res) => {
   console.log(req.params.id);
   const id = req.params.id;
 
-  const result = await ParentCategoryService.getSingleById(id);
+  const result = await ProductService.getSingleById(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "parent-category is retrieved successfully",
+    message: "Product  is retrieved successfully",
     data: result,
   });
 });
 
-export const updateParentCategoryById = catchAsync(
+export const updateProductById = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params; // Extract ID from request parameters
     const updateData = req.body; // Extract update payload from request body
 
     // Perform the update operation
-    const updatedCategory = await ParentCategoryService.updateParentCategoryId(
+    const updatedCategory = await ProductService.updateProductId(
       id,
       updateData
     );
 
     // Handle case where the category is not found
     if (!updatedCategory) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Parent category not found");
+      throw new ApiError(httpStatus.NOT_FOUND, "Product  not found");
     }
 
     // Send a successful response
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Parent category updated successfully",
+      message: "Product  updated successfully",
       data: updatedCategory,
     });
   }
 );
 
 const getAll = catchAsync(async (req, res) => {
-  const result = await ParentCategoryService.getAll();
+  const result = await ProductService.getAll();
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Parent category updated successfully",
+    message: "Product  updated successfully",
     data: result,
   });
 });
-const deleteParentCategory = catchAsync(async (req, res) => {
+const deleteProduct = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await ParentCategoryService.deleteParentCategoryFromDB(id);
+  const result = await ProductService.deleteProductFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Parent-Category is deleted successfully",
+    message: "Product  is deleted successfully",
     data: result,
   });
 });
 
-export const ParentCategoryController = {
-  createParentCategory,
-  getSingleParentCategoryBySlug,
-  getSingleParentCategoryById,
-  updateParentCategoryById,
+export const ProductController = {
+  createProduct,
+  getSingleProductBySlug,
+  getSingleProductById,
+  updateProductById,
   getAll,
-  deleteParentCategory,
+
+  deleteProduct,
 };
