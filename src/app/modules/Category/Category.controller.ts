@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import { CategoryService } from "./Category.service";
 
 import sendResponse from "../../shared/sendResponse ";
-import { Response } from "express";
+import { Request, Response } from "express";
 import ApiError from "../../errors/ApiError";
 
 const createCategory = catchAsync(
@@ -22,46 +22,50 @@ const createCategory = catchAsync(
   }
 );
 
-const getSingleCategoryBySlug = catchAsync(async (req, res) => {
-  const { slug } = req.params; // Destructure 'slug' from req.params
+const getSingleCategoryBySlug = catchAsync(
+  async (req: Request, res: Response) => {
+    const { slug } = req.params; // Destructure 'slug' from req.params
 
-  // Log slug for debugging
-  console.log("Slug:", slug);
+    // Log slug for debugging
+    console.log("Slug:", slug);
 
-  // Validate that slug exists
-  if (!slug) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Slug parameter is required");
+    // Validate that slug exists
+    if (!slug) {
+      throw new ApiError(httpStatus.BAD_REQUEST, "Slug parameter is required");
+    }
+
+    // Fetch the category by slug
+    const result = await CategoryService.getSingleBySlug(slug);
+
+    // Handle the case where the category does not exist
+    if (!result) {
+      throw new ApiError(httpStatus.NOT_FOUND, " Category not found");
+    }
+
+    // Send the successful response
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: " Category retrieved successfully",
+      data: result,
+    });
   }
+);
+const getSingleCategoryById = catchAsync(
+  async (req: Request, res: Response) => {
+    console.log(req.params.id);
+    const id = req.params.id;
 
-  // Fetch the category by slug
-  const result = await CategoryService.getSingleBySlug(slug);
+    const result = await CategoryService.getSingleById(id);
 
-  // Handle the case where the category does not exist
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, " Category not found");
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Category is retrieved successfully",
+      data: result,
+    });
   }
-
-  // Send the successful response
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: " Category retrieved successfully",
-    data: result,
-  });
-});
-const getSingleCategoryById = catchAsync(async (req, res) => {
-  console.log(req.params.id);
-  const id = req.params.id;
-
-  const result = await CategoryService.getSingleById(id);
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Category is retrieved successfully",
-    data: result,
-  });
-});
+);
 
 export const updateCategoryById = catchAsync(
   async (req: Request, res: Response) => {
@@ -89,7 +93,7 @@ export const updateCategoryById = catchAsync(
   }
 );
 
-const getAll = catchAsync(async (req, res) => {
+const getAll = catchAsync(async (req: Request, res: Response) => {
   const result = await CategoryService.getAll();
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -98,7 +102,7 @@ const getAll = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const deleteCategory = catchAsync(async (req, res) => {
+const deleteCategory = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await CategoryService.deleteCategoryFromDB(id);
 

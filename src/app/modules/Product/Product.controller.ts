@@ -4,7 +4,7 @@ import httpStatus from "http-status";
 import { ProductService } from "./Product.service";
 
 import sendResponse from "../../shared/sendResponse ";
-import { Response } from "express";
+import { Request, Response } from "express";
 import ApiError from "../../errors/ApiError";
 
 const createProduct = catchAsync(
@@ -22,34 +22,36 @@ const createProduct = catchAsync(
   }
 );
 
-const getSingleProductBySlug = catchAsync(async (req, res) => {
-  const { slug } = req.params; // Destructure 'slug' from req.params
+const getSingleProductBySlug = catchAsync(
+  async (req: Request, res: Response) => {
+    const { slug } = req.params; // Destructure 'slug' from req.params
 
-  // Log slug for debugging
-  console.log("Slug:", slug);
+    // Log slug for debugging
+    console.log("Slug:", slug);
 
-  // Validate that slug exists
-  if (!slug) {
-    throw new ApiError(httpStatus.BAD_REQUEST, "Slug parameter is required");
+    // Validate that slug exists
+    if (!slug) {
+      throw new ApiError(httpStatus.BAD_REQUEST, "Slug parameter is required");
+    }
+
+    // Fetch the category by slug
+    const result = await ProductService.getSingleBySlug(slug);
+
+    // Handle the case where the category does not exist
+    if (!result) {
+      throw new ApiError(httpStatus.NOT_FOUND, "Product not found");
+    }
+
+    // Send the successful response
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Product  retrieved successfully",
+      data: result,
+    });
   }
-
-  // Fetch the category by slug
-  const result = await ProductService.getSingleBySlug(slug);
-
-  // Handle the case where the category does not exist
-  if (!result) {
-    throw new ApiError(httpStatus.NOT_FOUND, "Product not found");
-  }
-
-  // Send the successful response
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Product  retrieved successfully",
-    data: result,
-  });
-});
-const getSingleProductById = catchAsync(async (req, res) => {
+);
+const getSingleProductById = catchAsync(async (req: Request, res: Response) => {
   console.log(req.params.id);
   const id = req.params.id;
 
@@ -89,7 +91,7 @@ export const updateProductById = catchAsync(
   }
 );
 
-const getAll = catchAsync(async (req, res) => {
+const getAll = catchAsync(async (req: Request, res: Response) => {
   const result = await ProductService.getAll();
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -98,7 +100,7 @@ const getAll = catchAsync(async (req, res) => {
     data: result,
   });
 });
-const deleteProduct = catchAsync(async (req, res) => {
+const deleteProduct = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await ProductService.deleteProductFromDB(id);
 
