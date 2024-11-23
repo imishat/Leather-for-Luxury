@@ -4,6 +4,8 @@ import cors from "cors";
 import globalErrorHandler from "./app/middlewares/globalErrorHandler";
 
 import router from "./app/routes";
+import sendResponse from "./app/shared/sendResponse ";
+import Status from "http-status";
 
 const app: Application = express();
 
@@ -13,17 +15,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/", (req: Request, res: Response) => {
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Welcome to the API Of Leather-for-Luxury",
+    data: null, // No data to send
+  });
+});
+
 // route
 app.use("/api/v1", router);
 //global error handler
 app.use(globalErrorHandler);
 //Testing
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  return res.status(200).json({
-    message: "Welcome to the API Of Leather-for-Luxury",
-    status: "success",
-    code: 200,
-  });
-});
 
 export default app;
