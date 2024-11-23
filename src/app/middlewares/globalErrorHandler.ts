@@ -8,6 +8,7 @@ import { Error } from "mongoose";
 import { ZodError } from "zod";
 import zodErrorHandler from "../errors/zodErrorHandler";
 import { ErrorRequestHandler } from "express";
+import handleCastError from "../errors/handleCastError";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   console.log(error, "golobal");
@@ -32,6 +33,14 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     const simplifiedError = zodErrorHandler(error);
     (statusCode = simplifiedError.statusCode),
       (message = simplifiedError.message);
+    errorMessages = simplifiedError.errorMessages;
+  }
+
+  //Cast error
+  else if (error?.name === "CastError") {
+    const simplifiedError = handleCastError(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   }
 
