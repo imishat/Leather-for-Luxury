@@ -26,7 +26,7 @@ git clone https://github.com/Leather-for-Luxury
 Install the dependencies:
 
 ```bash
-pnpm install
+yarn install
 ```
 
 Set the environment variables:
@@ -42,43 +42,43 @@ cp .env.example .env
 Running locally:
 
 ```bash
-pnpm dev
+yarn dev
 ```
 
 Running in production:
 
 ```bash
-pnpm start
+yarnstart
 ```
 
 Compiling to JS from TS
 
 ```bash
-pnpm build
+yarn build
 ```
 
 Linting:
 
 ```bash
 # run ESLint
-pnpm lint
+yarn lint
 
 # fix ESLint errors
-pnpm lint:fix
+yarn lint:fix
 
 # run prettier
-pnpm prettier
+yarn prettier
 
 # fix prettier errors
-pnpm prettier:fix
+yarnprettier:fix
 ```
 
 ## Making Changes
 
-Run `pnpm dev` so you can compile Typescript(.ts) files in watch mode
+Run `yarn dev` so you can compile Typescript(.ts) files in watch mode
 
 ```bash
-pnpm dev
+yarn dev
 ```
 
 Add your changes to TypeScript(.ts) files which are in the src folder. The files will be automatically compiled to JS if you are in watch mode.
