@@ -88,29 +88,12 @@ Add your changes to TypeScript(.ts) files which are in the src folder. The files
 The environment variables can be found and modified in the `.env` file. They come with these default values:
 
 ```bash
-# Port number
-PORT=3000
+NODE_ENV=development
+PORT=5000
+DATABASE_URL=mongodb+srv://auth-management:RdbAMWpEgfauaU3N@cluster0.xjdmb7o.mongodb.net/auth-menegemant?retryWrites=true&w=majority&appName=Cluster0
 
-# URL of the Mongo DB
-MONGODB_URL=mongodb://127.0.0.1:27017/Park254_Backend
 
-# JWT
-# JWT secret key
-JWT_SECRET=thisisasamplesecret
-# Number of minutes after which an access token expires
-JWT_ACCESS_EXPIRATION_MINUTES=30
-# Number of days after which a refresh token expires
-JWT_REFRESH_EXPIRATION_DAYS=30
-
-# SMTP configuration options for the email service
-# For testing, you can use a fake SMTP service like Ethereal: https://ethereal.email/create
-SMTP_HOST=email-server
-SMTP_PORT=587
-SMTP_USERNAME=email-server-username
-SMTP_PASSWORD=email-server-password
-EMAIL_FROM=support@yourapp.com
-
-# URL of client application
+BYCRYPT_SALT_ROUNDS=12
 CLIENT_URL=http://localhost:5000
 ```
 
