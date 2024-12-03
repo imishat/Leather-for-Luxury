@@ -11,5 +11,17 @@ export type IUSer = {
   // Mongoose-specific methods
   isModified(path: string): boolean;
 };
-
-export type USerModel = Model<IUSer, Record<string, unknown>>;
+export interface UserModel extends Model<IUSer> {
+  //instance methods for checking if the user exist
+  isUserExistsByEmail(email: string): Promise<IUSer>;
+  //instance methods for checking if passwords are matched
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashedPassword: string
+  ): Promise<boolean>;
+  // isJWTIssuedBeforePasswordChanged(
+  //   passwordChangedTimestamp: Date,
+  //   jwtIssuedTimestamp: number,
+  // ): boolean;
+}
+// export type USerModel = Model<IUSer, Record<string, unknown>>;
