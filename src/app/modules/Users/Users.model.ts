@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
-import { IUSer, USerModel } from "./Users.interface";
+import { IUSer, UserModel } from "./Users.interface";
 import bcrypt from "bcrypt";
 import config from "../../config";
 import slugify from "slugify";
 
 // Define the Mongoose schema
-const UserSchema = new Schema<IUSer>(
+const UserSchema = new Schema<IUSer, UserModel>(
   {
     id: { type: String, required: false },
     name: { type: String, required: true },
@@ -28,6 +28,18 @@ UserSchema.pre<IUSer>("save", async function (next) {
   );
   next();
 });
+
+// find user by email
+UserSchema.statics.isUserExistsByEmail = async function (email: string) {
+  return await User.findOne({ email }).select("+password");
+};
+// check password  meth
+UserSchema.statics.isPasswordMatched = async function (
+  plainTextPassword,
+  hashedPassword
+) {
+  return await bcrypt.compare(plainTextPassword, hashedPassword);
+};
 
 UserSchema.pre("save", function (next) {
   if (!this.id) {
@@ -79,4 +91,4 @@ UserSchema.set("toJSON", {
 });
 
 // Create the model using the schema
-export const User = mongoose.model<IUSer, USerModel>("User", UserSchema);
+export const User = mongoose.model<IUSer, UserModel>("User", UserSchema);

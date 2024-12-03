@@ -5,6 +5,7 @@ import { CategoryRoutes } from "../modules/Category/Category.routes";
 import { ProductRoutes } from "./../modules/Product/Product.routes";
 import { USerRoutes } from "../modules/Users/Users.routes";
 import { WishlistRoutes } from "../modules/Wishlist/Wishlist.routes";
+import { AuthRoutes } from "./../modules/Auth/Auth.routes";
 
 const router = express.Router();
 const moduleRoutes = [
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: "/wishlist",
     route: WishlistRoutes,
+  },
+  {
+    path: "/auth",
+    route: AuthRoutes,
   },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
