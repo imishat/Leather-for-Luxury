@@ -7,20 +7,18 @@ import sendResponse from "../../shared/sendResponse ";
 import { Request, Response } from "express";
 import ApiError from "../../errors/ApiError";
 
-const createCategory = catchAsync(
-  async (req: { body: any }, res: Response<any, Record<string, any>>) => {
-    const Category = req.body;
+const createCategory = catchAsync(async (req: Request, res: Response) => {
+  const Category = req.body;
+  console.log(req.user);
+  const result = await CategoryService.createCategory(Category);
 
-    const result = await CategoryService.createCategory(Category);
-
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "Category is created successfully",
-      data: result,
-    });
-  }
-);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Category is created successfully",
+    data: result,
+  });
+});
 
 const getSingleCategoryBySlug = catchAsync(
   async (req: Request, res: Response) => {
