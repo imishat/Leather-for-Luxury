@@ -1,5 +1,4 @@
-import { Mode } from "fs";
-import mongoose, { Model } from "mongoose";
+import mongoose, { Model, Types } from "mongoose";
 
 type Color = {
   colorName: string;
@@ -35,5 +34,10 @@ export type IProduct = {
   imageHover: string;
   additionalDetails: AdditionalDetails;
   productDetails: ProductDetails;
+};
+
+export type IProductFilters = {
+  searchTerm?: string;
+  categoryId?: Types.ObjectId;
 };
 export type ProductModel = Model<IProduct, Record<string, unknown>>;

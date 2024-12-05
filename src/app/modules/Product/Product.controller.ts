@@ -6,6 +6,10 @@ import { ProductService } from "./Product.service";
 import sendResponse from "../../shared/sendResponse ";
 import { Request, Response } from "express";
 import ApiError from "../../errors/ApiError";
+import pick from "../../shared/pick";
+import { paginationFields } from "../../constants/pagination";
+import { ProductFilterableFields } from "./Product.constants";
+import { IProduct } from "./Product.interface";
 
 const createProduct = catchAsync(
   async (req: { body: any }, res: Response<any, Record<string, any>>) => {
@@ -92,14 +96,19 @@ export const updateProductById = catchAsync(
 );
 
 const getAll = catchAsync(async (req: Request, res: Response) => {
-  const result = await ProductService.getAll();
-  sendResponse(res, {
+  const filters = pick(req.query, ProductFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
+
+  const result = await ProductService.getAll(filters, paginationOptions);
+  sendResponse<IProduct[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Product  updated successfully",
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
+
 const deleteProduct = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await ProductService.deleteProductFromDB(id);
