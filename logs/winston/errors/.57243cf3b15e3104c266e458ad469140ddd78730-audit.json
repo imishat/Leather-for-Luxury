@@ -34,6 +34,16 @@
             "date": 1733230875792,
             "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-03-12-19-error.log",
             "hash": "b75bbf59ee9abfb9dbfa776916776b83db1622ad48f24b68c0b0872696ac587c"
+        },
+        {
+            "date": 1733284272530,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-04-12-09-error.log",
+            "hash": "e94983ea71cc16e23df4f750251ad5a684f267b7df5a8d90af335a0f668cdc87"
+        },
+        {
+            "date": 1733285944986,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-04-12-10-error.log",
+            "hash": "937619de935dd440e8ff53cd44cb42cd0cb62e69cff215dc08c85ad9866bfe07"
         }
     ],
     "hashType": "sha256"

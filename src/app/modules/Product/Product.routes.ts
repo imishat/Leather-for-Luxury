@@ -1,6 +1,10 @@
 import express from "express";
 import { ProductController } from "./Product.controller";
 import { RatingController } from "../Rating/Rating.controller";
+import validateRequest from "../../middlewares/validateRequest";
+import { RatingZODSchema } from "../Rating/Rating.validation";
+import auth from "../../middlewares/auth";
+import { ENUM_USER_ROLE } from "../../../enums/users";
 
 const router = express.Router();
 
@@ -8,8 +12,21 @@ router.post("/create-product", ProductController.createProduct);
 router.get("/:slug", ProductController.getSingleProductBySlug);
 router.get("/", ProductController.getAll);
 router.get("/ById/:id", ProductController.getSingleProductById);
-router.patch("/update/:id", ProductController.updateProductById);
-router.delete("/delete/:id", ProductController.deleteProduct);
-router.post("/rating", RatingController.createRating);
+router.patch(
+  "/update/:id",
+  auth(ENUM_USER_ROLE.ADMIN),
+  ProductController.updateProductById
+);
+router.delete(
+  "/delete/:id",
+  auth(ENUM_USER_ROLE.ADMIN),
+  ProductController.deleteProduct
+);
+router.post(
+  "/rating",
+  validateRequest(RatingZODSchema),
+  auth(ENUM_USER_ROLE.USER),
+  RatingController.createRating
+);
 
 export const ProductRoutes = router;
