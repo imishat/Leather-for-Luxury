@@ -57,12 +57,25 @@ const getAll = async (
   // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
-      $or: ProductSearchableFields.map((field) => ({
-        [field]: {
-          $regex: searchTerm,
-          $paginationOptions: "i",
-        },
-      })),
+      $or: ProductSearchableFields.map((field) => {
+        if (field === "categoryId") {
+          return {
+            $expr: {
+              $regexMatch: {
+                input: { $toString: `$${field}` },
+                regex: searchTerm,
+                options: "i",
+              },
+            },
+          };
+        }
+        return {
+          [field]: {
+            $regex: searchTerm,
+            $options: "i",
+          },
+        };
+      }),
     });
   }
 
@@ -86,7 +99,7 @@ const getAll = async (
     andConditions.length > 0 ? { $and: andConditions } : {};
 
   const result = await Product.find(whereConditions)
-    .populate("academicFaculty")
+    .populate("categoryId")
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);

@@ -57,13 +57,7 @@ const getAll = async () => {
   return result;
 };
 const deleteCategoryFromDB = async (id: string) => {
-  const result = await Category.findByIdAndUpdate(
-    id,
-    { isDeleted: true },
-    {
-      new: true,
-    }
-  );
+  const result = await Category.deleteOne({ id });
   return result;
 };
 
