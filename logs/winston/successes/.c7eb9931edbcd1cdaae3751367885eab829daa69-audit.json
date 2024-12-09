@@ -6,21 +6,6 @@
     "auditLog": "C:\\Leather for Luxury\\logs\\winston\\successes\\.c7eb9931edbcd1cdaae3751367885eab829daa69-audit.json",
     "files": [
         {
-            "date": 1732742086280,
-            "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-28-11-03-success.log",
-            "hash": "5e55bd11615b70554663b7c9ec53ffe49b4aa853b45115f7e36ecbf72791a925"
-        },
-        {
-            "date": 1732749564222,
-            "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-28-11-05-success.log",
-            "hash": "55add83adce25f5ae6afe9ecb924a26f94760da1151bbb727759e6db1b93d3c9"
-        },
-        {
-            "date": 1732752036012,
-            "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-28-11-06-success.log",
-            "hash": "7042da81aa6e486c3b988589dc6015adba4617a43e988d8bd7614c2514645c9c"
-        },
-        {
             "date": 1733228089729,
             "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-03-12-18-success.log",
             "hash": "22ec6720b8a6b74dd255dd35c1041aa031d891163af0086c6abd77dff2b0af6f"
@@ -39,6 +24,16 @@
             "date": 1733285944982,
             "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-04-12-10-success.log",
             "hash": "c594e795c26e117d46a3e45b026df535ad9cd6dab7dac4372f9883dcdf2c1b97"
+        },
+        {
+            "date": 1733737752456,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-09-12-15-success.log",
+            "hash": "edf65c209c3ac143eb025595c1b92b1e0ccce454e13551150df788f69bdc3f66"
+        },
+        {
+            "date": 1733742380280,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\successes\\leather-2024-09-12-17-success.log",
+            "hash": "c6b9c183bad96d2ba2c4a9a2744d8100f9be524bddf028bb763a7d72ea406bc8"
         }
     ],
     "hashType": "sha256"
