@@ -6,21 +6,6 @@
     "auditLog": "C:\\Leather for Luxury\\logs\\winston\\errors\\.57243cf3b15e3104c266e458ad469140ddd78730-audit.json",
     "files": [
         {
-            "date": 1732742086288,
-            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-28-11-03-error.log",
-            "hash": "c2466015f4d46dee34f285928ed73749da83c1b8f3a920006c6a848f1c502f1b"
-        },
-        {
-            "date": 1732749564226,
-            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-28-11-05-error.log",
-            "hash": "4df2e1762aa6be28815374ffe0857d490a287a3aa2465ec1f9fd122f33611b72"
-        },
-        {
-            "date": 1732752036016,
-            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-28-11-06-error.log",
-            "hash": "f84159a212768f52bddf8f579a6d66f24c15a62811f84c7ecc22ea1bdce5d02b"
-        },
-        {
             "date": 1733228089737,
             "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-03-12-18-error.log",
             "hash": "3bc0a2ffdb40ae4850229a7e1fee4bd5d89d10946f60072b63ffd38cfcd91f4a"
@@ -49,6 +34,21 @@
             "date": 1733742380288,
             "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-09-12-17-error.log",
             "hash": "5f0507683117da81881f0c675efe69a91f222606fa5702752c0ba42e20f09d9d"
+        },
+        {
+            "date": 1734081067155,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-13-12-15-error.log",
+            "hash": "46fdb4125083f742fd043be10f9817ef8d7e6f85b706f920569366e338893691"
+        },
+        {
+            "date": 1734084553738,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-13-12-16-error.log",
+            "hash": "55124efdf4293a6d6b45b4fdb9e6fb9d9d6d0ac1f8fddb08488c9e92ba5fedec"
+        },
+        {
+            "date": 1734100712396,
+            "name": "C:\\Leather for Luxury\\logs\\winston\\errors\\leather-2024-13-12-20-error.log",
+            "hash": "90f4c838bbb728a801e40ce83b7f84714965d970cea5b3a795eadb78a81ea28c"
         }
     ],
     "hashType": "sha256"

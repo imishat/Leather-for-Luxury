@@ -8,6 +8,7 @@ import { ILoginUserResponse, IRefreshTokenResponse } from "./Auth.interface";
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.loginUser(req.body);
+
   const { refreshToken, ...others } = result;
   // set refresh token into cookie
   const cookieOptions = {
@@ -46,10 +47,22 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const changePassword = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user;
+  console.log(user);
+  await AuthService.changePassword(user, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Password Change successfully!",
+  });
+});
+
 export const AuthController = {
   loginUser,
   refreshToken,
-  // changePassword,
+  changePassword,
   // forgotPass,
   // resetPassword
 };
