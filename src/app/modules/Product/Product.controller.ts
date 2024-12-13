@@ -110,7 +110,7 @@ const getAll = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteProduct = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const id = req?.params?.id;
   const result = await ProductService.deleteProductFromDB(id);
 
   sendResponse(res, {

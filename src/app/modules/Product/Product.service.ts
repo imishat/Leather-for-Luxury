@@ -5,6 +5,8 @@ import { IPaginationOptions } from "../../interface/pagination";
 import { IGenericResponse } from "../../interface/common";
 import { ProductSearchableFields } from "./Product.constants";
 import { paginationHelpers } from "../../helpers/paginationHelper";
+import ApiError from "../../errors/ApiError";
+import httpStatus from "http-status";
 
 const createProduct = async (payload: IProduct): Promise<IProduct | null> => {
   const result = await Product.create(payload);
@@ -116,13 +118,13 @@ const getAll = async (
   };
 };
 const deleteProductFromDB = async (id: string) => {
-  const result = await Product.findByIdAndUpdate(
-    id,
-    { isDeleted: true },
-    {
-      new: true,
-    }
-  );
+  const product = await Product.findById(id);
+
+  if (!product) {
+    throw new ApiError(httpStatus.NOT_FOUND, "product not found");
+  }
+  const result = await Product.findByIdAndDelete({ _id: id });
+
   return result;
 };
 
