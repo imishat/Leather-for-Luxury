@@ -1,42 +1,43 @@
 import mongoose, { SortOrder } from "mongoose";
-import { IProduct, IProductFilters } from "./Product.interface";
-import { Product } from "./Product.model";
-import { IPaginationOptions } from "../../interface/pagination";
+import { IOrder, IOrderFilters } from "./Oder.interface";
+import { Order } from "./Oder.model";
+import { IProductFilters } from "../Product/Product.interface";
 import { IGenericResponse } from "../../interface/common";
-import { ProductSearchableFields } from "./Product.constants";
+import { IPaginationOptions } from "../../interface/pagination";
 import { paginationHelpers } from "../../helpers/paginationHelper";
+import { OrderSearchableFields } from "./Oder.constants";
 import ApiError from "../../errors/ApiError";
 import httpStatus from "http-status";
 
-const createProduct = async (payload: IProduct): Promise<IProduct | null> => {
-  const result = await Product.create(payload);
+const createOder = async (payload: IOrder): Promise<IOrder | null> => {
+  const result = await Order.create(payload);
 
-  // if (!createdUser) {
-  //   throw new ApiError(400, "Failed to create");
-  // }
   return result;
 };
 
-const getSingleBySlug = async (slug: string): Promise<IProduct | null> => {
-  const result = await Product.findOne({ slug }).populate("categoryId"); // Query by the 'slug' field
-  return result;
-};
 const getSingleById = async (id: string) => {
-  const result = await Product.findById(id);
+  const result = await Order.findById(id);
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Order not found");
+  }
+  return result;
+};
+const getOderByUser = async (id: string) => {
+  const result = await Order.find({ user: id });
   return result;
 };
 
-export const updateProductId = async (
+export const updateOrderId = async (
   id: string,
-  payload: Partial<IProduct>
-): Promise<IProduct | null> => {
+  payload: Partial<IOrder>
+): Promise<IOrder | null> => {
   // Validate the ID format
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new Error("Invalid ID format");
   }
 
   // Find and update the parent category
-  const result = await Product.findByIdAndUpdate(id, payload, {
+  const result = await Order.findByIdAndUpdate(id, payload, {
     new: true, // Return the updated document
     runValidators: true, // Enforce schema validations
   });
@@ -45,9 +46,9 @@ export const updateProductId = async (
 };
 
 const getAll = async (
-  filters: IProductFilters,
+  filters: IOrderFilters,
   paginationOptions: IPaginationOptions
-): Promise<IGenericResponse<IProduct[]>> => {
+): Promise<IGenericResponse<IOrder[]>> => {
   const { limit, page, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
 
@@ -59,8 +60,8 @@ const getAll = async (
   // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
-      $or: ProductSearchableFields.map((field) => {
-        if (field === "categoryId") {
+      $or: OrderSearchableFields.map((field) => {
+        if (field === "Product" || "User") {
           return {
             $expr: {
               $regexMatch: {
@@ -100,13 +101,13 @@ const getAll = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  const result = await Product.find(whereConditions)
+  const result = await Order.find(whereConditions)
 
     .sort(sortConditions)
     .skip(skip)
     .limit(limit);
 
-  const total = await Product.countDocuments(whereConditions);
+  const total = await Order.countDocuments(whereConditions);
 
   return {
     meta: {
@@ -117,22 +118,22 @@ const getAll = async (
     data: result,
   };
 };
-const deleteProductFromDB = async (id: string) => {
-  const product = await Product.findById(id);
+const deleteOrderFromDB = async (id: string) => {
+  const order = await Order.findById(id);
 
-  if (!product) {
-    throw new ApiError(httpStatus.NOT_FOUND, "product not found");
+  if (!order) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Order not found");
   }
-  const result = await Product.findByIdAndDelete({ _id: id });
+  const result = await Order.findByIdAndDelete({ _id: id });
 
   return result;
 };
 
-export const ProductService = {
-  createProduct,
-  getSingleBySlug,
+export const OrderService = {
+  createOder,
+  getOderByUser,
   getSingleById,
-  updateProductId,
+  updateOrderId,
   getAll,
-  deleteProductFromDB,
+  deleteOrderFromDB,
 };

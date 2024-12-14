@@ -12,6 +12,7 @@ router.post("/create-product", ProductController.createProduct);
 router.get("/:slug", ProductController.getSingleProductBySlug);
 router.get("/", ProductController.getAll);
 router.get("/ById/:id", ProductController.getSingleProductById);
+router.get("/product/:id", RatingController.getRatingByProduct);
 router.patch(
   "/update/:id",
   auth(ENUM_USER_ROLE.ADMIN),
@@ -19,7 +20,7 @@ router.patch(
 );
 router.delete(
   "/delete/:id",
-  auth(ENUM_USER_ROLE.ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN),
   ProductController.deleteProduct
 );
 router.post(

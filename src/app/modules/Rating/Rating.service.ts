@@ -6,6 +6,12 @@ const createRating = async (payload: IRating): Promise<IRating | null> => {
 
   return result;
 };
+
+const getRatingByProduct = async (id: string) => {
+  const result = await Rating.find({ productId: id });
+  return result;
+};
 export const RatingService = {
   createRating,
+  getRatingByProduct,
 };

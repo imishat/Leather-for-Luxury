@@ -1,6 +1,7 @@
 import httpStatus from "http-status";
 import { User } from "../Users/Users.model";
 import {
+  IChangePassword,
   ILoginUserResponse,
   IRefreshTokenResponse,
   TLoginUser,
@@ -8,7 +9,8 @@ import {
 import ApiError from "../../errors/ApiError";
 import { createToken, verifyToken } from "../../helpers/jwtHelpers";
 import config from "../../config";
-import { Secret } from "jsonwebtoken";
+import { JwtPayload, Secret } from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const loginUser = async (payload: TLoginUser): Promise<ILoginUserResponse> => {
   // checking if the user is exist
@@ -17,23 +19,6 @@ const loginUser = async (payload: TLoginUser): Promise<ILoginUserResponse> => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, "This user is not found !");
   }
-  // checking if the user is already deleted
-
-  // const isDeleted = user?.isDeleted;
-
-  // if (isDeleted) {
-  //   throw new ApiError(httpStatus.FORBIDDEN, 'This user is deleted !');
-  // }
-
-  // checking if the user is blocked
-
-  // const userStatus = user?.status;
-
-  // if (userStatus === 'blocked') {
-  //   throw new ApiError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
-  // }
-
-  //checking if the password is correct
 
   if (!(await User.isPasswordMatched(payload?.password, user?.password)))
     throw new ApiError(httpStatus.FORBIDDEN, "Password do not matched");
@@ -96,10 +81,45 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
   };
 };
 
+const changePassword = async (
+  user: JwtPayload | null,
+  payload: IChangePassword
+): Promise<void> => {
+  const { oldPassword, newPassword } = payload;
+
+  // checking if the user is exist
+  const UserExists = await User.isUserExistsByEmail(user?.email);
+
+  if (!UserExists) {
+    throw new ApiError(httpStatus.NOT_FOUND, "This user is not found !");
+  }
+  if (
+    UserExists.password &&
+    !(await User.isPasswordMatched(oldPassword, UserExists.password))
+  ) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, "Old Password is incorrect");
+  }
+
+  // hash password before saving
+  const newHashedPassword = await bcrypt.hash(
+    newPassword,
+    Number(config.bycrypt_salt_rounds)
+  );
+
+  const query = { email: user?.email };
+  const updatedData = {
+    password: newHashedPassword, //
+    // needsPasswordChange: false,
+    // passwordChangedAt: new Date(), //
+  };
+
+  await User.findOneAndUpdate(query, updatedData);
+};
+
 export const AuthService = {
   loginUser,
   refreshToken,
-  // changePassword,
+  changePassword,
   // forgotPass,
   // resetPassword
 };

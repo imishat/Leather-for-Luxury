@@ -6,6 +6,7 @@ import { ProductRoutes } from "./../modules/Product/Product.routes";
 import { USerRoutes } from "../modules/Users/Users.routes";
 import { WishlistRoutes } from "../modules/Wishlist/Wishlist.routes";
 import { AuthRoutes } from "./../modules/Auth/Auth.routes";
+import { OderRoutes } from "../modules/Oder/Oder.routes";
 
 const router = express.Router();
 const moduleRoutes = [
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: "/auth",
     route: AuthRoutes,
+  },
+  {
+    path: "/order",
+    route: OderRoutes,
   },
 ];
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
