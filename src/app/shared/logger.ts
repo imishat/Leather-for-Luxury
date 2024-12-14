@@ -5,12 +5,16 @@ const { combine, timestamp, label, printf } = format;
 
 //Customm Log Format
 
+// const myFormat = printf(({ level, message, label, timestamp }) => {
+//   const date = new Date(timestamp);
+//   const hour = date.getHours();
+//   const minutes = date.getMinutes();
+//   const seconds = date.getSeconds();
+//   return `${date.toDateString()} ${hour}:${minutes}:${seconds} } [${label}] ${level}: ${message}`;
+// });
+
 const myFormat = printf(({ level, message, label, timestamp }) => {
-  const date = new Date(timestamp);
-  const hour = date.getHours();
-  const minutes = date.getMinutes();
-  const seconds = date.getSeconds();
-  return `${date.toDateString()} ${hour}:${minutes}:${seconds} } [${label}] ${level}: ${message}`;
+  return `${timestamp} [${label}] ${level}: ${message}`;
 });
 
 const logger = createLogger({
