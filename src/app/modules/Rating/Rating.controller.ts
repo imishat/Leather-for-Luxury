@@ -15,6 +15,20 @@ const createRating = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getRatingByProduct = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const result = await RatingService.getRatingByProduct(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: " Product Rating is retrieved successfully",
+    data: result,
+  });
+});
+
 export const RatingController = {
   createRating,
+  getRatingByProduct,
 };
