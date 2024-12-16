@@ -4,12 +4,12 @@ exports.ParentCategoryValidation = void 0;
 const zod_1 = require("zod");
 const ParentCategoryZodSchema = zod_1.z.object({
     body: zod_1.z.object({
-        id: zod_1.z.string(),
+        id: zod_1.z.string().optional(),
         name: zod_1.z.string({
             required_error: "name is required",
         }),
         image: zod_1.z.string({
-            required_error: "name is required",
+            required_error: "image is required",
         }),
         slug: zod_1.z.string().optional(),
     }),
