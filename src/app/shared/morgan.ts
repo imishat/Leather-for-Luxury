@@ -22,7 +22,7 @@ Custom success handler for Morgan middleware
 */
 export const successHandler = morgan(successResponseFormat, {
   skip: (_req: Request, res: Response) => res.statusCode >= 400,
-  stream: { write: (message: string) => logger.info(message.trim()) },
+  stream: { write: (message: string) => console.log(message.trim()) },
 });
 
 /**
@@ -34,5 +34,5 @@ Custom error handler for Morgan middleware
 */
 export const errorHandler = morgan(errroResponseFormat, {
   skip: (_req: Request, res: Response) => res.statusCode < 400,
-  stream: { write: (message: string) => errorlogger.error(message.trim()) },
+  stream: { write: (message: string) => console.log(message.trim()) },
 });
