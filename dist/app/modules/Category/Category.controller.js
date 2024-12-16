@@ -65,7 +65,7 @@ const getSingleCategoryById = (0, catchAsync_1.catchAsync)((req, res) => __await
 const getParent = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.params.id);
     const id = req.params.id;
-    const result = yield Category_service_1.CategoryService.getSingleById(id);
+    const result = yield Category_service_1.CategoryService.getParent(id);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
         success: true,

@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   "/user/create-wishlist",
-  auth(ENUM_USER_ROLE.USER),
+  // auth(ENUM_USER_ROLE.USER),
   WishlistController.createWishlist
 );
 router.get("/user-wishlist/:id", WishlistController.getSingleUserWishlist);
