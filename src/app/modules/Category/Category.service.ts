@@ -34,7 +34,7 @@ const getSingleById = async (id: string) => {
   return result;
 };
 const getParent = async (id: string) => {
-  const result = await Category.find({ id });
+  const result = await Category.find({ parentCategoryId: id });
   return result;
 };
 

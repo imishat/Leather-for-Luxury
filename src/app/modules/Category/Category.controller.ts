@@ -68,7 +68,7 @@ const getParent = catchAsync(async (req: Request, res: Response) => {
   console.log(req.params.id);
   const id = req.params.id;
 
-  const result = await CategoryService.getSingleById(id);
+  const result = await CategoryService.getParent(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
