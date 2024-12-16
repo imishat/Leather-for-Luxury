@@ -2,7 +2,6 @@ import { z } from "zod";
 
 const ParentCategoryZodSchema = z.object({
   body: z.object({
-    id: z.string().optional(),
     name: z.string({
       required_error: "name is required",
     }),

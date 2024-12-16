@@ -8,7 +8,7 @@ import slugify from "slugify";
 // Define Mongoose schema
 const ParentCategorySchema = new Schema<IParentCategory>(
   {
-    id: { type: String, unique: true }, // Derived from `_id`
+    // Derived from `_id`
     name: { type: String, required: true, unique: true },
     image: { type: String, required: true },
     slug: { type: String, unique: true },
