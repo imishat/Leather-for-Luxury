@@ -15,7 +15,7 @@ router.get("/ById/:id", ProductController.getSingleProductById);
 router.get("/product/:id", RatingController.getRatingByProduct);
 router.patch(
   "/update/:id",
-  auth(ENUM_USER_ROLE.ADMIN),
+  // auth(ENUM_USER_ROLE.ADMIN),
   ProductController.updateProductById
 );
 router.delete(
@@ -26,7 +26,7 @@ router.delete(
 router.post(
   "/rating",
   validateRequest(RatingZODSchema),
-  auth(ENUM_USER_ROLE.USER),
+  // auth(ENUM_USER_ROLE.USER),
   RatingController.createRating
 );
 

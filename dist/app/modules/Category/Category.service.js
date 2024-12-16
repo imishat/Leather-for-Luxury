@@ -39,7 +39,7 @@ const getSingleById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getParent = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Category_model_1.Category.find({ id });
+    const result = yield Category_model_1.Category.find({ parentCategoryId: id });
     return result;
 });
 const updateCategoryId = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
