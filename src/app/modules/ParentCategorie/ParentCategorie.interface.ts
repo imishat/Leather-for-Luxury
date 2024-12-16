@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
 
 export type IParentCategory = {
-  id: string;
+  id?: string;
   name: string;
   image: string;
   slug?: string;
