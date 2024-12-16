@@ -2,6 +2,8 @@ import { assert } from "console";
 import { IParentCategory } from "./ParentCategorie.interface";
 import { ParentCategory } from "./ParentCategory.model";
 import mongoose from "mongoose";
+import ApiError from "../../errors/ApiError";
+import httpStatus from "http-status";
 
 const createParentCategory = async (
   payload: IParentCategory
@@ -48,13 +50,13 @@ const getAll = async () => {
   return result;
 };
 const deleteParentCategoryFromDB = async (id: string) => {
-  const result = await ParentCategory.findByIdAndUpdate(
-    id,
-    { isDeleted: true },
-    {
-      new: true,
-    }
-  );
+  const parentCategory = await ParentCategory.findById(id);
+
+  if (!parentCategory) {
+    throw new ApiError(httpStatus.NOT_FOUND, "parentCategory not found");
+  }
+  const result = await ParentCategory.findByIdAndDelete({ _id: id });
+
   return result;
 };
 
