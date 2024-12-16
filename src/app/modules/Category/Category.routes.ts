@@ -17,6 +17,7 @@ router.post(
 router.get("/:slug", CategoryController.getSingleCategoryBySlug);
 router.get("/", CategoryController.getAll);
 router.get("/ById/:id", CategoryController.getSingleCategoryById);
+router.get("/Parent/:id", CategoryController.getParent);
 router.patch(
   "/update/:id",
   validateRequest(CategoryValidation.CategoryUpdateZodSchema),

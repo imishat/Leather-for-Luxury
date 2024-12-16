@@ -64,6 +64,19 @@ const getSingleCategoryById = catchAsync(
     });
   }
 );
+const getParent = catchAsync(async (req: Request, res: Response) => {
+  console.log(req.params.id);
+  const id = req.params.id;
+
+  const result = await CategoryService.getSingleById(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "  All Parent Category is retrieved successfully",
+    data: result,
+  });
+});
 
 export const updateCategoryById = catchAsync(
   async (req: Request, res: Response) => {
@@ -119,4 +132,5 @@ export const CategoryController = {
   updateCategoryById,
   getAll,
   deleteCategory,
+  getParent,
 };

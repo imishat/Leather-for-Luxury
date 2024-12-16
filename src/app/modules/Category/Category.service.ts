@@ -33,6 +33,10 @@ const getSingleById = async (id: string) => {
   const result = await Category.findById(id);
   return result;
 };
+const getParent = async (id: string) => {
+  const result = await Category.find({ id });
+  return result;
+};
 
 export const updateCategoryId = async (
   id: string,
@@ -68,4 +72,5 @@ export const CategoryService = {
   updateCategoryId,
   getAll,
   deleteCategoryFromDB,
+  getParent,
 };
