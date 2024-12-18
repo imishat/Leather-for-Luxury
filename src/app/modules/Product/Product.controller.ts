@@ -31,7 +31,6 @@ const getSingleProductBySlug = catchAsync(
     const { slug } = req.params; // Destructure 'slug' from req.params
 
     // Log slug for debugging
-    console.log("Slug:", slug);
 
     // Validate that slug exists
     if (!slug) {
@@ -56,7 +55,6 @@ const getSingleProductBySlug = catchAsync(
   }
 );
 const getSingleProductById = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.params.id);
   const id = req.params.id;
 
   const result = await ProductService.getSingleById(id);
@@ -103,7 +101,7 @@ const getAll = catchAsync(async (req: Request, res: Response) => {
   sendResponse<IProduct[]>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Product  updated successfully",
+    message: "Product  retrieved successfully",
     meta: result.meta,
     data: result.data,
   });

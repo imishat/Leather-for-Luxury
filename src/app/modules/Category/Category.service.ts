@@ -61,7 +61,12 @@ const getAll = async () => {
   return result;
 };
 const deleteCategoryFromDB = async (id: string) => {
-  const result = await Category.deleteOne({ id });
+  const category = await Category.findById(id);
+
+  if (!category) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Category not found");
+  }
+  const result = await Category.findByIdAndDelete({ _id: id });
   return result;
 };
 
