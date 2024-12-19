@@ -4,6 +4,10 @@ import sendResponse from "../../shared/sendResponse ";
 import httpStatus from "http-status";
 import { OrderService } from "./Oder.service";
 import ApiError from "../../errors/ApiError";
+import { paginationFields } from "../../constants/pagination";
+import pick from "../../shared/pick";
+import { IOrder } from "./Oder.interface";
+import { OrderFilterableFields } from "./Oder.constants";
 
 const createOder = catchAsync(
   async (req: { body: any }, res: Response<any, Record<string, any>>) => {
@@ -14,14 +18,26 @@ const createOder = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Oder is created successfully",
+      message: "Order is created successfully",
       data: result,
     });
   }
 );
+const getAll = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, OrderFilterableFields);
+  const paginationOptions = pick(req.query, paginationFields);
+
+  const result = await OrderService.getAll(filters, paginationOptions);
+  sendResponse<IOrder[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Order retrieved successfully",
+    meta: result.meta,
+    data: result.data,
+  });
+});
 
 const getSingleOrderById = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.params.id);
   const id = req.params.id;
 
   const result = await OrderService.getSingleById(id);
@@ -34,7 +50,6 @@ const getSingleOrderById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getOrderByUser = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.params.id);
   const id = req.params.id;
 
   const result = await OrderService.getOderByUser(id);
@@ -82,6 +97,7 @@ const deleteOrder = catchAsync(async (req: Request, res: Response) => {
 
 export const OderController = {
   createOder,
+  getAll,
   getSingleOrderById,
   getOrderByUser,
   updateOderById,

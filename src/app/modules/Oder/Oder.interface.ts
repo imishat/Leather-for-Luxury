@@ -20,6 +20,6 @@ export type IOrder = {
 export type IOrderFilters = {
   searchTerm?: string;
   user?: Types.ObjectId;
-  status: string;
+  status?: string;
 };
 export type OderModel = Model<IOrder, Record<string, unknown>>;

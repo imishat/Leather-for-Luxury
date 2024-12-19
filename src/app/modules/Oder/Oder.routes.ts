@@ -5,13 +5,13 @@ import { OrderValidation } from "./Oder.validation";
 const router = express.Router();
 
 router.post(
-  "/create-oder",
+  "/create-order",
   validateRequest(OrderValidation.OrderZodSchema),
   OderController.createOder
 );
 
-router.get("/ById/:id", OderController.getSingleOrderById);
 router.get("/User/:id", OderController.getOrderByUser);
+router.get("/all-order", OderController.getAll);
 router.patch(
   "/update/:id",
   validateRequest(OrderValidation.UpdateOrderZodSchema),
