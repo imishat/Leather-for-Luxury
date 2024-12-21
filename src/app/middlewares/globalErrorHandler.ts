@@ -9,6 +9,7 @@ import { ZodError } from "zod";
 import zodErrorHandler from "../errors/zodErrorHandler";
 import { ErrorRequestHandler } from "express";
 import handleCastError from "../errors/handleCastError";
+import { handleDuplicateFieldError } from "../errors/handleDuplicateFieldError";
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   console.log(error, "golobal");
@@ -21,10 +22,19 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let message = "Something went wrong";
   let errorMessages: IGenericErrorMessage[] = [];
   // validation error message
+
   if (error.name === "ValidationError") {
     const simplifiedError = handleValidationError(error);
     (statusCode = simplifiedError.statusCode),
       (message = simplifiedError.message);
+    errorMessages = simplifiedError.errorMessages;
+  }
+
+  // DuplicateField error message
+  else if (error.code === 11000) {
+    const simplifiedError = handleDuplicateFieldError(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
   }
 

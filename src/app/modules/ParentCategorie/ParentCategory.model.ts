@@ -9,6 +9,7 @@ import slugify from "slugify";
 const ParentCategorySchema = new Schema<IParentCategory>(
   {
     // Derived from `_id`
+    id: { type: String, required: false },
     name: { type: String, required: true, unique: true },
     image: { type: String, required: true },
     slug: { type: String, unique: true },

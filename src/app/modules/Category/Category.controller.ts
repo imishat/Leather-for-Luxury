@@ -25,7 +25,6 @@ const getSingleCategoryBySlug = catchAsync(
     const { slug } = req.params; // Destructure 'slug' from req.params
 
     // Log slug for debugging
-    console.log("Slug:", slug);
 
     // Validate that slug exists
     if (!slug) {
