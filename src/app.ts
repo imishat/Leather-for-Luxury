@@ -7,6 +7,7 @@ import router from "./app/routes";
 import sendResponse from "./app/shared/sendResponse ";
 import Status from "http-status";
 import cookieParser from "cookie-parser";
+import jsonSyntaxErrorHandler from "./app/errors/jsonSyntaxErrorHandler";
 const app: Application = express();
 
 app.use(cors());
@@ -27,6 +28,9 @@ app.get("/", (req: Request, res: Response) => {
 
 // route
 app.use("/api/v1", router);
+
+// Catch JSON syntax errors
+app.use(jsonSyntaxErrorHandler);
 //global error handler
 app.use(globalErrorHandler);
 //Testing

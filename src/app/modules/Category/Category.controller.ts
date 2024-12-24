@@ -9,7 +9,7 @@ import ApiError from "../../errors/ApiError";
 
 const createCategory = catchAsync(async (req: Request, res: Response) => {
   const Category = req.body;
-  console.log(req.user);
+
   const result = await CategoryService.createCategory(Category);
 
   sendResponse(res, {
