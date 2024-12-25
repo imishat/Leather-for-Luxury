@@ -24,7 +24,10 @@ router.patch(
 router.patch(
   "/Update-Top-Banner/:id",
 
-  BannerController.getSingleTopBannerById
+  BannerController.updateTopBannerById
 );
+
+router.get("/all-TopBanner", BannerController.getAllTopBanner);
+router.get("/all-VideoBanner", BannerController.getAllVideoBanner);
 
 export const BannerRoutes = router;

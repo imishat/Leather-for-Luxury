@@ -108,7 +108,7 @@ const getAll = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Category updated successfully",
+    message: "Category retrieved  successfully",
     data: result,
   });
 });

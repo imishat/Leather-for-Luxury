@@ -4,6 +4,7 @@ export type IOrder = {
   orderItems: {
     quantity: number;
     product: mongoose.Types.ObjectId;
+    color: mongoose.Types.ObjectId;
   }[];
   shippingAddress1: string;
   shippingAddress2?: string;

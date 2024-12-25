@@ -11,6 +11,9 @@ export const OrderZodSchema = z.object({
           .refine((id) => mongoose.Types.ObjectId.isValid(id), {
             message: "Invalid Product ID",
           }),
+        color: z.string().refine((id) => mongoose.Types.ObjectId.isValid(id), {
+          message: "Invalid color ID",
+        }),
       })
     ),
     shippingAddress1: z.string().min(1, "Shipping address is required"),
@@ -36,6 +39,7 @@ export const UpdateOrderZodSchema = z.object({
           z.object({
             quantity: z.number().optional(),
             product: z.string().optional(),
+            color: z.string().optional(),
           })
         )
         .optional(),

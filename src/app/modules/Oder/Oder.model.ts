@@ -11,6 +11,11 @@ const orderSchema = new Schema<IOrder>(
           ref: "Product",
           require: [true, "Product is required"],
         },
+        color: {
+          type: mongoose.Schema.ObjectId,
+          ref: "Product",
+          require: [true, "color is required"],
+        },
       },
     ],
     shippingAddress1: {

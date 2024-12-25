@@ -97,7 +97,7 @@ export const updateTopBannerById = catchAsync(
 
     // Handle case where the category is not found
     if (!updatedTopBanner) {
-      throw new ApiError(httpStatus.NOT_FOUND, " Video not found");
+      throw new ApiError(httpStatus.NOT_FOUND, " Top banner not found");
     }
 
     // Send a successful response
@@ -109,6 +109,24 @@ export const updateTopBannerById = catchAsync(
     });
   }
 );
+const getAllTopBanner = catchAsync(async (req: Request, res: Response) => {
+  const result = await BannerService.getAllTopBanner();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "TopBanner retrieved successfully",
+    data: result,
+  });
+});
+const getAllVideoBanner = catchAsync(async (req: Request, res: Response) => {
+  const result = await BannerService.getAllVideoBanner();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "VideoBanner retrieved successfully",
+    data: result,
+  });
+});
 
 export const BannerController = {
   createVideo,
@@ -117,4 +135,6 @@ export const BannerController = {
   getSingleTopBannerById,
   updateVideoBannerById,
   updateTopBannerById,
+  getAllTopBanner,
+  getAllVideoBanner,
 };

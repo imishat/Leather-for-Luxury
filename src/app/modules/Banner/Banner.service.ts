@@ -60,6 +60,16 @@ const updateTopBannerById = async (
 
   return result;
 };
+const getAllTopBanner = async () => {
+  const result = await TopBanner.find().sort({ createdAt: -1 });
+
+  return result;
+};
+const getAllVideoBanner = async () => {
+  const result = await VideoBanner.find({}).sort({ createdAt: -1 });
+
+  return result;
+};
 
 export const BannerService = {
   createVideoBanner,
@@ -68,4 +78,6 @@ export const BannerService = {
   getSingleTopBannerById,
   updateVideoBannerById,
   updateTopBannerById,
+  getAllTopBanner,
+  getAllVideoBanner,
 };
