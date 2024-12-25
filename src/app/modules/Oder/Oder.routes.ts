@@ -1,6 +1,6 @@
 import express from "express";
-import { OderController } from "./Oder.controller";
 import validateRequest from "./../../middlewares/validateRequest";
+import { OderController } from "./Oder.controller";
 import { OrderValidation } from "./Oder.validation";
 const router = express.Router();
 
@@ -11,6 +11,7 @@ router.post(
 );
 
 router.get("/User/:id", OderController.getOrderByUser);
+router.get("/ById/:id", OderController.getSingleOrderById);
 router.get("/all-order", OderController.getAll);
 router.patch(
   "/update/:id",

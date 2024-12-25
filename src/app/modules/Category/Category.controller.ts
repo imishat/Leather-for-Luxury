@@ -9,7 +9,7 @@ import ApiError from "../../errors/ApiError";
 
 const createCategory = catchAsync(async (req: Request, res: Response) => {
   const Category = req.body;
-  console.log(req.user);
+
   const result = await CategoryService.createCategory(Category);
 
   sendResponse(res, {
@@ -108,7 +108,7 @@ const getAll = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: "Category updated successfully",
+    message: "Category retrieved  successfully",
     data: result,
   });
 });

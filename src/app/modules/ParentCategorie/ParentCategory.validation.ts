@@ -11,9 +11,10 @@ const ParentCategoryZodSchema = z.object({
     slug: z.string().optional(),
   }),
 });
+
 const UpdateParentCategoryZodSchema = z.object({
   body: z.object({
-    id: z.string(),
+    id: z.string().optional(),
     name: z.string().optional(),
     image: z.string().optional(),
     slug: z.string().optional(),

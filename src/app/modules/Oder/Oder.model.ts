@@ -11,6 +11,10 @@ const orderSchema = new Schema<IOrder>(
           ref: "Product",
           require: [true, "Product is required"],
         },
+        color: {
+          type: String,
+          require: true,
+        },
       },
     ],
     shippingAddress1: {
