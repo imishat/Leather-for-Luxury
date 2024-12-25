@@ -23,13 +23,13 @@ const getSingleById = async (id: string) => {
       populate: {
         path: "product",
       },
-    })
-    .populate({
-      path: "orderItems",
-      populate: {
-        path: "color",
-      },
     });
+  // .populate({
+  //   path: "orderItems",
+  //   populate: {
+  //     path: "color",
+  //   },
+  // });
 
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Order not found");

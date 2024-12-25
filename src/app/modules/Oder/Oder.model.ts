@@ -12,9 +12,8 @@ const orderSchema = new Schema<IOrder>(
           require: [true, "Product is required"],
         },
         color: {
-          type: mongoose.Schema.ObjectId,
-          ref: "Product",
-          require: [true, "color is required"],
+          type: String,
+          require: true,
         },
       },
     ],
