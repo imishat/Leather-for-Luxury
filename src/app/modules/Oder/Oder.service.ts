@@ -16,28 +16,20 @@ const createOder = async (payload: IOrder): Promise<IOrder | null> => {
 };
 
 const getSingleById = async (id: string) => {
-  const result = await Order.findById(id)
-    .populate("user")
-    .populate({
-      path: "orderItems",
-      populate: {
-        path: "product",
-      },
-    });
-  // .populate({
-  //   path: "orderItems",
-  //   populate: {
-  //     path: "color",
-  //   },
-  // });
+  const result = await Order.findById(id).populate({
+    path: "orderItems",
+    populate: {
+      path: "product",
+    },
+  });
 
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Order not found");
   }
   return result;
 };
-const getOderByUser = async (id: string) => {
-  const result = await Order.find({ user: id });
+const getOderByUser = async (email: string) => {
+  const result = await Order.find({ email: email });
   return result;
 };
 

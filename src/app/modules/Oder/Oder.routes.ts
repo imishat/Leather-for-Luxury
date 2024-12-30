@@ -10,7 +10,7 @@ router.post(
   OderController.createOder
 );
 
-router.get("/User/:id", OderController.getOrderByUser);
+router.get("/User/:email", OderController.getOrderByUser);
 router.get("/ById/:id", OderController.getSingleOrderById);
 router.get("/all-order", OderController.getAll);
 router.patch(

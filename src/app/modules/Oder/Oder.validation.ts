@@ -14,18 +14,16 @@ export const OrderZodSchema = z.object({
         color: z.string().min(1, "color is  required"),
       })
     ),
-    shippingAddress1: z.string().min(1, "Shipping address is required"),
-    shippingAddress2: z.string().optional(),
+    name: z.string().min(1, "name is required"),
+    shippingAddress: z.string().optional(),
     city: z.string().min(1, "City is required"),
     zip: z.string().min(1, "ZIP code is required"),
     country: z.string().min(1, "Country is required"),
     phone: z.string().min(1, "Phone number is required"),
+    email: z.string().min(1, "Email number is required"),
     status: z.string().default("Pending"),
     totalPrice: z.number().optional(),
-    user: z.string().refine((id) => mongoose.Types.ObjectId.isValid(id), {
-      message: "Invalid parent category ID",
-    }),
-
+    trackCode: z.string().optional(),
     dateOrdered: z.date().optional(),
   }),
 });
@@ -41,21 +39,16 @@ export const UpdateOrderZodSchema = z.object({
           })
         )
         .optional(),
-      shippingAddress1: z.string().optional(),
+      name: z.string().optional(),
       shippingAddress2: z.string().optional(),
       city: z.string().optional(),
       zip: z.string().optional(),
       country: z.string().optional(),
       phone: z.string().optional(),
+      email: z.string().optional(),
       status: z.string().optional(),
       totalPrice: z.number().optional(),
-      user: z
-        .string()
-        .refine((id) => mongoose.Types.ObjectId.isValid(id), {
-          message: "Invalid parent category ID",
-        })
-        .optional(),
-
+      trackCode: z.string().optional(),
       dateOrdered: z.date().optional(),
     })
     .optional(),
