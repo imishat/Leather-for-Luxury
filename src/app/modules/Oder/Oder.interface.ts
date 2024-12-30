@@ -6,15 +6,16 @@ export type IOrder = {
     product: mongoose.Types.ObjectId;
     color: string;
   }[];
-  shippingAddress1: string;
-  shippingAddress2?: string;
+  name: string;
+  shippingAddress?: string;
   city: string;
   zip: string;
   country: string;
   phone: string;
+  email: string;
   status?: string;
   totalPrice?: number;
-  user?: mongoose.Types.ObjectId; //
+  trackCode?: string;
   dateOrdered?: Date;
 };
 

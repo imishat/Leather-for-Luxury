@@ -50,8 +50,7 @@ const getSingleOrderById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getOrderByUser = catchAsync(async (req: Request, res: Response) => {
-  const id = req.params.id;
-
+  const id = req.params.email;
   const result = await OrderService.getOderByUser(id);
 
   sendResponse(res, {

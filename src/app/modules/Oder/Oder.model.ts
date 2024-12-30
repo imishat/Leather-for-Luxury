@@ -17,22 +17,20 @@ const orderSchema = new Schema<IOrder>(
         },
       },
     ],
-    shippingAddress1: {
+    name: {
       type: String,
       require: [true, "shippingAddress1 is required"],
     },
-    shippingAddress2: { type: String },
+    shippingAddress: { type: String },
     city: { type: String, require: [true, "city is required"] },
     zip: { type: String, required: true },
     country: { type: String, required: true },
     phone: { type: String, required: true },
+    email: { type: String, required: true },
     status: { type: String, required: true, default: "Pending" },
     totalPrice: { type: Number },
-    user: {
-      type: mongoose.Schema.ObjectId,
-      ref: "User",
-      require: [true, "user is required"],
-    },
+    trackCode: { type: String },
+
     dateOrdered: { type: Date, default: Date.now },
   },
   { timestamps: true }

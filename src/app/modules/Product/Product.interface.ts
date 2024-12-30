@@ -20,6 +20,11 @@ type ProductDetails = {
   size: Size;
   warranty: string;
 };
+type Leather = {
+  image?: string;
+  title?: string[];
+};
+
 export type IProduct = {
   barcode: string;
   slug?: string;
@@ -34,6 +39,7 @@ export type IProduct = {
   imageHover: string;
   additionalDetails: AdditionalDetails;
   productDetails: ProductDetails;
+  leather?: Leather;
 };
 
 export type IProductFilters = {

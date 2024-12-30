@@ -38,6 +38,11 @@ const ProductSchema = new Schema<IProduct>(
       size: [{ type: Map, of: String, required: true }],
       warranty: { type: String, required: true },
     },
+
+    leather: {
+      image: { type: String, required: false },
+      title: { type: [String], required: false },
+    },
   },
   { timestamps: true }
 );

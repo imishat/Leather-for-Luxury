@@ -17,7 +17,8 @@ export const VideoBanner = mongoose.model<IVideoBanner, VideoBannerModel>(
 
 const TopBannerSchema = new Schema<ITopBanner>({
   header: { type: String, required: true },
-  image: { type: String, required: true },
+  image: { type: [String], required: true },
+  title: { type: [String] },
 });
 export const TopBanner = mongoose.model<ITopBanner, TopBannerModel>(
   "TopBanner",

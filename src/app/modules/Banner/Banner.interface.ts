@@ -6,7 +6,8 @@ export type IVideoBanner = {
 
 export type ITopBanner = {
   header: string;
-  image: string;
+  image: string[];
+  title?: string[];
 };
 
 export type VideoBannerModel = Model<IVideoBanner, Record<string, unknown>>;
