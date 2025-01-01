@@ -104,7 +104,15 @@ const getAll = async (
 
     .sort(sortConditions)
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .select({
+      name: 1,
+      imageDefault: 1,
+      imageHover: 1,
+      slug: 1,
+      originalPrice: 1,
+      discountedPrice: 1,
+    });
 
   const total = await Product.countDocuments(whereConditions);
 

@@ -8,6 +8,7 @@ import { paginationHelpers } from "../../helpers/paginationHelper";
 import { OrderSearchableFields } from "./Oder.constants";
 import ApiError from "../../errors/ApiError";
 import httpStatus from "http-status";
+import { sendVerificationEmail } from "../../middlewares/email";
 
 const createOder = async (payload: IOrder): Promise<IOrder | null> => {
   const result = await Order.create(payload);
@@ -29,7 +30,23 @@ const getSingleById = async (id: string) => {
   return result;
 };
 const getOderByUser = async (email: string) => {
-  const result = await Order.find({ email: email });
+  const result = await Order.find({ email: email }).populate({
+    path: "orderItems",
+    populate: {
+      path: "product",
+      select: `
+      barcode
+      slug
+      name
+      originalPrice
+      discountedPrice
+      inStock
+      onSale
+      imageDefault
+      imageHover
+    `.trim(),
+    },
+  });
   return result;
 };
 
@@ -37,6 +54,8 @@ export const updateOrderId = async (
   id: string,
   payload: Partial<IOrder>
 ): Promise<IOrder | null> => {
+  const { trackCode } = payload;
+
   // Validate the ID format
   if (!mongoose.Types.ObjectId.isValid(id)) {
     throw new Error("Invalid ID format");
@@ -47,6 +66,13 @@ export const updateOrderId = async (
     new: true, // Return the updated document
     runValidators: true, // Enforce schema validations
   });
+
+  if (result && trackCode) {
+    const idData = result.email;
+    await sendVerificationEmail(idData, trackCode);
+    // Ensure it's a string
+    console.log("Updated document ID:", idData);
+  }
 
   return result;
 };
