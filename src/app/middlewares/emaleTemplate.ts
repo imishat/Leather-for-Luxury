@@ -70,7 +70,7 @@ export const Verification_Email_Template = `
               <p>If you have any questions about your order, feel free to contact our support team.</p>
           </div>
           <div class="footer">
-              <p>&copy; ${new Date().getFullYear()} Your Company. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} Leather For Luxury. All rights reserved.</p>
           </div>
       </div>
 

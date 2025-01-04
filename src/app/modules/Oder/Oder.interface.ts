@@ -14,7 +14,7 @@ export type IOrder = {
   phone: string;
   email: string;
   status?: string;
-  totalPrice?: number;
+  totalPrice: number;
   trackCode?: string;
   dateOrdered?: Date;
 };

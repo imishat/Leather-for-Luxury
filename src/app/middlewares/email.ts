@@ -1,8 +1,11 @@
+import { IOrder } from "../modules/Oder/Oder.interface";
+import { IProduct } from "../modules/Product/Product.interface";
 import { transporter } from "./email.config";
 import {
   Verification_Email_Template,
   Welcome_Email_Template,
 } from "./emaleTemplate";
+import { Order_Email_Template } from "./orderEmailTemplate";
 
 export const sendVerificationEmail = async (
   email: string,
@@ -22,6 +25,62 @@ export const sendVerificationEmail = async (
     console.log("Email sent successfully:", response);
   } catch (error) {
     console.error("Email error:", error);
+  }
+};
+
+export const sendOrderEmail = async (
+  email: string,
+  Items: IProduct[],
+  structuredOrderItems: IOrder
+): Promise<void> => {
+  try {
+    // Generate the dynamic HTML for the order items
+    const orderItemsHTML = structuredOrderItems.orderItems
+      .map((item) => {
+        const product = Items.find((p) => p._id.equals(item.product));
+        return `
+          <tr>
+            <td width="20%">
+              <img src="${product?.imageDefault}" alt="${product?.name}" width="90">
+            </td>
+            <td width="60%">
+              <span class="font-weight-bold">${product?.name}</span>
+              <div class="product-qty">
+                <span class="d-block">Quantity: ${item.quantity}</span>
+                <span>Color: ${item.color}</span>
+              </div>
+            </td>
+            <td width="20%">
+              <div class="text-right">
+                <span class="font-weight-bold">$${product?.originalPrice}</span>
+              </div>
+            </td>
+          </tr>
+        `;
+      })
+      .join("");
+
+    // Replace placeholders in the template
+    const emailHTML = Order_Email_Template.replace(
+      "{orderItems}",
+      orderItemsHTML
+    ).replace("{totalPrice}", structuredOrderItems.totalPrice.toFixed(2)); // Use totalPrice from the order
+
+    // Send the email
+    const response = await transporter.sendMail({
+      from: '"Leather For Luxury" <overseasreshan@gmail.com>',
+      to: email,
+      subject: "Order Confirmed",
+      text: `Your order has been confirmed! Track Code: ${
+        structuredOrderItems.trackCode || "N/A"
+      }`,
+      html: emailHTML, // Final email HTML with the dynamic content
+    });
+
+    console.log("Email sent successfully:", response);
+  } catch (error) {
+    console.error("Email error:", error);
+    throw new Error("Failed to send email");
   }
 };
 
