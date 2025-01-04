@@ -8,10 +8,39 @@ import { paginationHelpers } from "../../helpers/paginationHelper";
 import { OrderSearchableFields } from "./Oder.constants";
 import ApiError from "../../errors/ApiError";
 import httpStatus from "http-status";
-import { sendVerificationEmail } from "../../middlewares/email";
+import { sendOrderEmail, sendVerificationEmail } from "../../middlewares/email";
+import { Product } from "../Product/Product.model";
 
 const createOder = async (payload: IOrder): Promise<IOrder | null> => {
-  const result = await Order.create(payload);
+  // Fetch the products by their IDs
+  const productIds = payload.orderItems.map((item) => item.product);
+  const products = await Product.find({ _id: { $in: productIds } });
+  console.log(products, "product");
+  // Ensure all products are found
+  if (products.length !== productIds.length) {
+    throw new ApiError(httpStatus.NOT_FOUND, "One or more products not found");
+  }
+
+  // Structure the orderItems with product details
+  const structuredOrderItems = payload.orderItems.map((item) => {
+    const product = products.find((p) => p._id.equals(item.product));
+    if (!product) {
+      throw new Error("Product not found");
+    }
+    return {
+      ...item,
+      product: product._id, // or any additional details you want to add
+    };
+  });
+
+  // Create the order
+  const result = await Order.create({
+    ...payload,
+    orderItems: structuredOrderItems,
+  });
+
+  // Send the order email
+  await sendOrderEmail(payload.email, products, result);
 
   return result;
 };
@@ -71,7 +100,6 @@ export const updateOrderId = async (
     const idData = result.email;
     await sendVerificationEmail(idData, trackCode);
     // Ensure it's a string
-    console.log("Updated document ID:", idData);
   }
 
   return result;
