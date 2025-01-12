@@ -30,8 +30,29 @@ const paginationHelper_1 = require("../../helpers/paginationHelper");
 const Oder_constants_1 = require("./Oder.constants");
 const ApiError_1 = __importDefault(require("../../errors/ApiError"));
 const http_status_1 = __importDefault(require("http-status"));
+const email_1 = require("../../middlewares/email");
+const Product_model_1 = require("../Product/Product.model");
 const createOder = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Oder_model_1.Order.create(payload);
+    // Fetch the products by their IDs
+    const productIds = payload.orderItems.map((item) => item.product);
+    const products = yield Product_model_1.Product.find({ _id: { $in: productIds } });
+    console.log(products, "product");
+    // Ensure all products are found
+    if (products.length !== productIds.length) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "One or more products not found");
+    }
+    // Structure the orderItems with product details
+    const structuredOrderItems = payload.orderItems.map((item) => {
+        const product = products.find((p) => p._id.equals(item.product));
+        if (!product) {
+            throw new Error("Product not found");
+        }
+        return Object.assign(Object.assign({}, item), { product: product._id });
+    });
+    // Create the order
+    const result = yield Oder_model_1.Order.create(Object.assign(Object.assign({}, payload), { orderItems: structuredOrderItems }));
+    // Send the order email
+    yield (0, email_1.sendOrderEmail)(payload.email, products, result);
     return result;
 });
 const getSingleById = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -47,10 +68,27 @@ const getSingleById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getOderByUser = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Oder_model_1.Order.find({ email: email });
+    const result = yield Oder_model_1.Order.find({ email: email }).populate({
+        path: "orderItems",
+        populate: {
+            path: "product",
+            select: `
+      barcode
+      slug
+      name
+      originalPrice
+      discountedPrice
+      inStock
+      onSale
+      imageDefault
+      imageHover
+    `.trim(),
+        },
+    });
     return result;
 });
 const updateOrderId = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const { trackCode } = payload;
     // Validate the ID format
     if (!mongoose_1.default.Types.ObjectId.isValid(id)) {
         throw new Error("Invalid ID format");
@@ -60,6 +98,11 @@ const updateOrderId = (id, payload) => __awaiter(void 0, void 0, void 0, functio
         new: true, // Return the updated document
         runValidators: true, // Enforce schema validations
     });
+    if (result && trackCode) {
+        const idData = result.email;
+        yield (0, email_1.sendVerificationEmail)(idData, trackCode);
+        // Ensure it's a string
+    }
     return result;
 });
 exports.updateOrderId = updateOrderId;

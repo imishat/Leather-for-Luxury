@@ -105,7 +105,15 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
     const result = yield Product_model_1.Product.find(whereConditions)
         .sort(sortConditions)
         .skip(skip)
-        .limit(limit);
+        .limit(limit)
+        .select({
+        name: 1,
+        imageDefault: 1,
+        imageHover: 1,
+        slug: 1,
+        originalPrice: 1,
+        discountedPrice: 1,
+    });
     const total = yield Product_model_1.Product.countDocuments(whereConditions);
     return {
         meta: {

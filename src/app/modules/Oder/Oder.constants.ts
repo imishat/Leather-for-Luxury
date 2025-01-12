@@ -3,6 +3,7 @@ export const OrderFilterableFields = [
   "user",
   "status",
   "dateOrdered",
+  "email",
 ];
 
-export const OrderSearchableFields = ["user", "status", "dateOrdered"];
+export const OrderSearchableFields = ["user", "status", "dateOrdered,email"];

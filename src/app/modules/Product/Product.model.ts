@@ -23,6 +23,11 @@ const ProductSchema = new Schema<IProduct>(
       ref: "Category",
       required: true,
     },
+    parentCategoryId: {
+      type: mongoose.Schema.ObjectId,
+      ref: "ParentCategory",
+      required: true,
+    },
     imageDefault: { type: String, required: true },
     imageHover: { type: String, required: true },
     additionalDetails: [
