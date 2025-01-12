@@ -58,6 +58,11 @@ const ProductSchema = new mongoose_1.Schema({
         ref: "Category",
         required: true,
     },
+    parentCategoryId: {
+        type: mongoose_1.default.Schema.ObjectId,
+        ref: "ParentCategory",
+        required: true,
+    },
     imageDefault: { type: String, required: true },
     imageHover: { type: String, required: true },
     additionalDetails: [
