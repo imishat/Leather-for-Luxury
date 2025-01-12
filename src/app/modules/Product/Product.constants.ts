@@ -1,3 +1,12 @@
-export const ProductFilterableFields = ["searchTerm", "name", "categoryId"];
+export const ProductFilterableFields = [
+  "searchTerm",
+  "name",
+  "categoryId",
+  "parentCategoryId",
+];
 
-export const ProductSearchableFields = ["name", "categoryId"];
+export const ProductSearchableFields = [
+  "name",
+  "categoryId",
+  "parentCategoryId",
+];

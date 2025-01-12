@@ -36,6 +36,7 @@ export type IProduct = {
   inStock: boolean;
   onSale: boolean;
   categoryId: mongoose.Types.ObjectId;
+  parentCategoryId?: mongoose.Types.ObjectId;
   imageDefault: string;
   imageHover: string;
   additionalDetails: AdditionalDetails;
@@ -46,5 +47,6 @@ export type IProduct = {
 export type IProductFilters = {
   searchTerm?: string;
   categoryId?: Types.ObjectId;
+  parentCategoryId?: Types.ObjectId;
 };
 export type ProductModel = Model<IProduct, Record<string, unknown>>;
