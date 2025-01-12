@@ -4,6 +4,8 @@ export const OrderFilterableFields = [
   "status",
   "dateOrdered",
   "email",
+  "startDate",
+  " endDate",
 ];
 
 export const OrderSearchableFields = ["user", "status", "dateOrdered,email"];

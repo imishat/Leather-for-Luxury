@@ -6,5 +6,6 @@ exports.OrderFilterableFields = [
     "user",
     "status",
     "dateOrdered",
+    "email",
 ];
-exports.OrderSearchableFields = ["user", "status", "dateOrdered"];
+exports.OrderSearchableFields = ["user", "status", "dateOrdered,email"];

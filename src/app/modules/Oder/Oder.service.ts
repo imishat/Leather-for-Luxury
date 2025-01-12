@@ -113,9 +113,45 @@ const getAll = async (
     paginationHelpers.calculatePagination(paginationOptions);
 
   // Extract searchTerm to implement search query
-  const { searchTerm, ...filtersData } = filters;
+  const { startDate, endDate, searchTerm, ...filtersData } = filters;
 
   const andConditions = [];
+
+  let start = startDate ? new Date(startDate) : null;
+  let end = endDate ? new Date(endDate) : null;
+
+  // Validate and handle date range
+  if (start && end) {
+    if (start > end) {
+      // Swap dates if startDate is after endDate
+      [start, end] = [end, start];
+    }
+    start.setHours(0, 0, 0, 0); // Start of the day
+    end.setHours(23, 59, 59, 999); // End of the day
+
+    andConditions.push({
+      dateOrdered: {
+        $gte: start,
+        $lte: end,
+      },
+    });
+  } else if (start) {
+    // If only startDate is provided, get all data from startDate onwards
+    start.setHours(0, 0, 0, 0);
+    andConditions.push({
+      dateOrdered: {
+        $gte: start,
+      },
+    });
+  } else if (end) {
+    // If only endDate is provided, get all data up to endDate
+    end.setHours(23, 59, 59, 999);
+    andConditions.push({
+      dateOrdered: {
+        $lte: end,
+      },
+    });
+  }
 
   // Search needs $or for searching in specified fields
   if (searchTerm) {
@@ -161,6 +197,7 @@ const getAll = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
+  console.log("Query Conditions:", whereConditions);
   const result = await Order.find(whereConditions)
 
     .sort(sortConditions)

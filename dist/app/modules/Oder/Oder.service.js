@@ -111,6 +111,14 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
     // Extract searchTerm to implement search query
     const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
     const andConditions = [];
+    // if (startDate || endDate) {
+    //   andConditions.push({
+    //     dateOrdered: {
+    //       ...(startDate ? { $gte: new Date(startDate) } : {}),
+    //       ...(endDate ? { $lte: new Date(endDate) } : {}),
+    //     },
+    //   });
+    // }
     // Search needs $or for searching in specified fields
     if (searchTerm) {
         andConditions.push({

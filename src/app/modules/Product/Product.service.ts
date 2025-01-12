@@ -60,7 +60,7 @@ const getAll = async (
   if (searchTerm) {
     andConditions.push({
       $or: ProductSearchableFields.map((field) => {
-        if (field === "categoryId") {
+        if (field === "categoryId" || "parentCategoryId") {
           return {
             $expr: {
               $regexMatch: {

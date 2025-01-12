@@ -25,5 +25,7 @@ export type IOrderFilters = {
   status?: string;
   dateOrdered?: string;
   email?: string;
+  startDate?: string;
+  endDate?: string;
 };
 export type OderModel = Model<IOrder, Record<string, unknown>>;
