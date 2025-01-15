@@ -7,5 +7,7 @@ exports.OrderFilterableFields = [
     "status",
     "dateOrdered",
     "email",
+    "startDate",
+    " endDate",
 ];
 exports.OrderSearchableFields = ["user", "status", "dateOrdered,email"];

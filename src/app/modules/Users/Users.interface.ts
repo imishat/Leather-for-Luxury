@@ -9,6 +9,7 @@ export type IUSer = {
   slug?: string;
   phone?: string;
   shippingAddress?: string;
+  role?: string;
 
   // Mongoose-specific methods
   isModified(path: string): boolean;

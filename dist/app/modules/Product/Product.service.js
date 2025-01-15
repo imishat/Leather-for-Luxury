@@ -67,7 +67,7 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
     if (searchTerm) {
         andConditions.push({
             $or: Product_constants_1.ProductSearchableFields.map((field) => {
-                if (field === "categoryId") {
+                if (field === "categoryId" || "parentCategoryId") {
                     return {
                         $expr: {
                             $regexMatch: {
