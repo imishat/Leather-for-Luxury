@@ -19,7 +19,7 @@ const orderSchema = new Schema<IOrder>(
     ],
     name: {
       type: String,
-      require: [true, "shippingAddress1 is required"],
+      require: [true, "name is required"],
     },
     shippingAddress: { type: String },
     city: { type: String, require: [true, "city is required"] },

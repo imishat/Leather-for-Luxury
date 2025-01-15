@@ -11,9 +11,6 @@ import httpStatus from "http-status";
 const createProduct = async (payload: IProduct): Promise<IProduct | null> => {
   const result = await Product.create(payload);
 
-  // if (!createdUser) {
-  //   throw new ApiError(400, "Failed to create");
-  // }
   return result;
 };
 
@@ -52,7 +49,7 @@ const getAll = async (
     paginationHelpers.calculatePagination(paginationOptions);
 
   // Extract searchTerm to implement search query
-  const { searchTerm, ...filtersData } = filters;
+  const { category, searchTerm, ...filtersData } = filters;
 
   const andConditions = [];
 

@@ -12,11 +12,11 @@ type AdditionalDetails = {
   images: string[];
 };
 type Size = {
-  [key: string]: string; // For dynamic size keys like "XL", "L", etc.
+  [key: string]: string;
 };
 
 type ProductDetails = {
-  additionalProductDetails: Record<string, any>; // For key-value pairs
+  additionalProductDetails: Record<string, any>;
   size: Size;
   warranty: string;
 };
@@ -46,6 +46,7 @@ export type IProduct = {
 
 export type IProductFilters = {
   searchTerm?: string;
+  category?: string;
   categoryId?: Types.ObjectId;
   parentCategoryId?: Types.ObjectId;
 };
