@@ -51,8 +51,8 @@ const ProductSchema = new mongoose_1.Schema({
     ],
     originalPrice: { type: Number, required: true },
     discountedPrice: { type: Number, required: true },
-    inStock: { type: Boolean, required: true },
-    onSale: { type: Boolean, required: true },
+    inStock: { type: Boolean, required: true, default: false },
+    onSale: { type: Boolean, required: true, default: false },
     categoryId: {
         type: mongoose_1.default.Schema.ObjectId,
         ref: "Category",

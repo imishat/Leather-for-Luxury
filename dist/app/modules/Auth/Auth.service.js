@@ -30,7 +30,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     //create token and sent to the  client
     const jwtPayload = {
         email: user.email,
-        role: "user",
+        role: user.role,
     };
     const accessToken = (0, jwtHelpers_1.createToken)(jwtPayload, config_1.default.jwt_access_secret, config_1.default.jwt_access_expires_in);
     const refreshToken = (0, jwtHelpers_1.createToken)(jwtPayload, config_1.default.jwt_refresh_secret, config_1.default.jwt_refresh_expires_in);

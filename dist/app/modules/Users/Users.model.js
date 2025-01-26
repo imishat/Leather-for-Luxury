@@ -46,6 +46,7 @@ const UserSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     slug: { type: String, require: false },
     email: { type: String, required: true, unique: true },
+    role: { type: String, default: "user" },
     location: { type: String },
     password: { type: String, required: true, select: 0 },
     phone: { type: String, required: false, select: 0 },
