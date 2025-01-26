@@ -10,4 +10,5 @@ export const ProductSearchableFields = [
   "name",
   "categoryId",
   "parentCategoryId",
+  "originalPrice",
 ];

@@ -32,9 +32,6 @@ const ApiError_1 = __importDefault(require("../../errors/ApiError"));
 const http_status_1 = __importDefault(require("http-status"));
 const createProduct = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Product_model_1.Product.create(payload);
-    // if (!createdUser) {
-    //   throw new ApiError(400, "Failed to create");
-    // }
     return result;
 });
 const getSingleBySlug = (slug) => __awaiter(void 0, void 0, void 0, function* () {
@@ -61,7 +58,7 @@ exports.updateProductId = updateProductId;
 const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { limit, page, skip, sortBy, sortOrder } = paginationHelper_1.paginationHelpers.calculatePagination(paginationOptions);
     // Extract searchTerm to implement search query
-    const { searchTerm } = filters, filtersData = __rest(filters, ["searchTerm"]);
+    const { category, searchTerm } = filters, filtersData = __rest(filters, ["category", "searchTerm"]);
     const andConditions = [];
     // Search needs $or for searching in specified fields
     if (searchTerm) {

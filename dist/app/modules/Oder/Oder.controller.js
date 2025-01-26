@@ -34,7 +34,6 @@ const createOder = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, 
 const getAll = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const filters = (0, pick_1.default)(req.query, Oder_constants_1.OrderFilterableFields);
     const paginationOptions = (0, pick_1.default)(req.query, pagination_1.paginationFields);
-    console.log("query", filters);
     const result = yield Oder_service_1.OrderService.getAll(filters, paginationOptions);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,
