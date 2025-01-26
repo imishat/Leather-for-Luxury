@@ -9,13 +9,13 @@ export const RatingZODSchema = z.object({
     .refine((id) => mongoose.Types.ObjectId.isValid(id), {
       message: "Invalid parent category ID",
     }), // Mongoose ObjectId validator
-  userId: z
-    .string({
-      required_error: "UserId is required",
-    })
-    .refine((id) => mongoose.Types.ObjectId.isValid(id), {
-      message: "Invalid parent category ID",
-    }), // Ensures it's a string
+  useEmail: z.string({
+    required_error: "UserId is required",
+  }),
+  useName: z.string({
+    required_error: "UserId is required",
+  }),
+  // Ensures it's a string
   reviewText: z.string({
     required_error: "give some text review",
   }), // Ensures it's a string
