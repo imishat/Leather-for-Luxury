@@ -47,9 +47,10 @@ const getAll = async (
 ): Promise<IGenericResponse<IProduct[]>> => {
   const { limit, page, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
-
+  console.log(filters, "flitter");
   // Extract searchTerm to implement search query
-  const { category, searchTerm, ...filtersData } = filters;
+  const { category, searchTerm, startPrice, endPrice, ...filtersData } =
+    filters;
 
   const andConditions = [];
 
@@ -84,6 +85,16 @@ const getAll = async (
       $and: Object.entries(filtersData).map(([field, value]) => ({
         [field]: value,
       })),
+    });
+  }
+
+  // Price range filter
+  if (startPrice && endPrice) {
+    andConditions.push({
+      originalPrice: {
+        $gte: startPrice, // Greater than or equal to startPrice
+        $lte: endPrice, // Less than or equal to endPrice
+      },
     });
   }
 
