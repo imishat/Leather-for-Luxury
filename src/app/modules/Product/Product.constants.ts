@@ -4,6 +4,8 @@ export const ProductFilterableFields = [
   "categoryId",
   "parentCategoryId",
   " category",
+  "startPrice",
+  "endPrice",
 ];
 
 export const ProductSearchableFields = [
