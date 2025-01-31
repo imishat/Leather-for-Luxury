@@ -14,13 +14,13 @@ exports.RatingZODSchema = zod_1.z.object({
         .refine((id) => mongoose_1.default.Types.ObjectId.isValid(id), {
         message: "Invalid parent category ID",
     }), // Mongoose ObjectId validator
-    userId: zod_1.z
-        .string({
+    useEmail: zod_1.z.string({
         required_error: "UserId is required",
-    })
-        .refine((id) => mongoose_1.default.Types.ObjectId.isValid(id), {
-        message: "Invalid parent category ID",
-    }), // Ensures it's a string
+    }),
+    useName: zod_1.z.string({
+        required_error: "UserId is required",
+    }),
+    // Ensures it's a string
     reviewText: zod_1.z.string({
         required_error: "give some text review",
     }), // Ensures it's a string
