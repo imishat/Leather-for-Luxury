@@ -31,7 +31,8 @@ const RatingSchema = new mongoose_1.Schema({
         ref: "Product",
         required: true,
     },
-    userId: { type: String, required: true }, // ID of the user submitting the review
+    userEmail: { type: String, required: true }, // ID of the user submitting the review
+    userName: { type: String, required: true }, // ID of the user submitting the review
     reviewText: { type: String, required: true }, // Text of the review
     ratingStar: { type: Number, required: true },
 });

@@ -7,9 +7,12 @@ exports.ProductFilterableFields = [
     "categoryId",
     "parentCategoryId",
     " category",
+    "startPrice",
+    "endPrice",
 ];
 exports.ProductSearchableFields = [
     "name",
     "categoryId",
     "parentCategoryId",
+    "originalPrice",
 ];

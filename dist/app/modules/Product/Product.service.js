@@ -57,8 +57,9 @@ const updateProductId = (id, payload) => __awaiter(void 0, void 0, void 0, funct
 exports.updateProductId = updateProductId;
 const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0, function* () {
     const { limit, page, skip, sortBy, sortOrder } = paginationHelper_1.paginationHelpers.calculatePagination(paginationOptions);
+    console.log(filters, "flitter");
     // Extract searchTerm to implement search query
-    const { category, searchTerm } = filters, filtersData = __rest(filters, ["category", "searchTerm"]);
+    const { category, searchTerm, startPrice, endPrice } = filters, filtersData = __rest(filters, ["category", "searchTerm", "startPrice", "endPrice"]);
     const andConditions = [];
     // Search needs $or for searching in specified fields
     if (searchTerm) {
@@ -92,6 +93,15 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
             })),
         });
     }
+    // Price range filter
+    if (startPrice && endPrice) {
+        andConditions.push({
+            originalPrice: {
+                $gte: startPrice, // Greater than or equal to startPrice
+                $lte: endPrice, // Less than or equal to endPrice
+            },
+        });
+    }
     // Dynamic  Sort needs  field to  do sorting
     const sortConditions = {};
     if (sortBy && sortOrder) {
@@ -110,6 +120,8 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
         slug: 1,
         originalPrice: 1,
         discountedPrice: 1,
+        inStock: 1,
+        onSale: 1,
     });
     const total = yield Product_model_1.Product.countDocuments(whereConditions);
     return {
