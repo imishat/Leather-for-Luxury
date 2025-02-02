@@ -111,7 +111,7 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
     // Price range filter
     if (startPrice && endPrice) {
         andConditions.push({
-            originalPrice: {
+            discountedPrice: {
                 $gte: startPrice, // Greater than or equal to startPrice
                 $lte: endPrice, // Less than or equal to endPrice
             },
@@ -137,7 +137,6 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
         discountedPrice: 1,
         inStock: 1,
         onSale: 1,
-        color: 1,
     });
     const total = yield Product_model_1.Product.countDocuments(whereConditions);
     return {

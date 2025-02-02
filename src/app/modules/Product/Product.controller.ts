@@ -80,7 +80,7 @@ export const updateProductById = catchAsync(
 
     // Handle case where the category is not found
     if (!updatedCategory) {
-      throw new ApiError(httpStatus.NOT_FOUND, "Product  not found");
+      throw new ApiError(httpStatus.NOT_FOUND, "Product  not found ");
     }
 
     // Send a successful response
@@ -119,6 +119,23 @@ const deleteProduct = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllUniqueColor = catchAsync(async (req: Request, res: Response) => {
+  const result = await ProductService.getAllUniqueColors();
+
+  console.log("hlw", result);
+
+  if (!result) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Colors not found");
+  }
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Unique colors retrieved successfully",
+    data: result,
+  });
+});
+
 export const ProductController = {
   createProduct,
   getSingleProductBySlug,
@@ -127,4 +144,5 @@ export const ProductController = {
   getAll,
 
   deleteProduct,
+  getAllUniqueColor,
 };
