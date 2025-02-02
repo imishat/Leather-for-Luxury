@@ -29,5 +29,6 @@ router.post(
   // auth(ENUM_USER_ROLE.USER),
   RatingController.createRating
 );
+router.get("/all/colors", ProductController.getAllUniqueColor);
 
 export const ProductRoutes = router;

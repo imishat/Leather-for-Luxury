@@ -20,6 +20,7 @@ const getSingleBySlug = async (slug: string): Promise<IProduct | null> => {
 };
 const getSingleById = async (id: string) => {
   const result = await Product.findById(id);
+  console.log(result);
   return result;
 };
 
@@ -167,6 +168,26 @@ const deleteProductFromDB = async (id: string) => {
   return result;
 };
 
+const getAllUniqueColors = async () => {
+  const uniqueColors = await Product.aggregate([
+    { $unwind: "$color" },
+    {
+      $group: {
+        _id: "$color.colorName",
+        firstHex: { $first: "$color.hex" },
+        productCount: { $sum: 1 },
+      },
+    },
+    { $sort: { _id: 1 } },
+  ]);
+
+  return uniqueColors.map((color) => ({
+    colorName: color._id,
+    Hex: color.firstHex,
+    productCount: color.productCount,
+  }));
+};
+
 export const ProductService = {
   createProduct,
   getSingleBySlug,
@@ -174,4 +195,5 @@ export const ProductService = {
   updateProductId,
   getAll,
   deleteProductFromDB,
+  getAllUniqueColors,
 };

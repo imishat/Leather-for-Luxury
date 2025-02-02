@@ -15,5 +15,5 @@ exports.ProductSearchableFields = [
     "name",
     "categoryId",
     "parentCategoryId",
-    "originalPrice",
+    "discountedPrice",
 ];
