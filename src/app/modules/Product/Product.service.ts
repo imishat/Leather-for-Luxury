@@ -112,7 +112,7 @@ const getAll = async (
   // Price range filter
   if (startPrice && endPrice) {
     andConditions.push({
-      originalPrice: {
+      discountedPrice: {
         $gte: startPrice, // Greater than or equal to startPrice
         $lte: endPrice, // Less than or equal to endPrice
       },
@@ -143,7 +143,6 @@ const getAll = async (
       discountedPrice: 1,
       inStock: 1,
       onSale: 1,
-      color: 1,
     });
 
   const total = await Product.countDocuments(whereConditions);
