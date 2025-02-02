@@ -59,7 +59,7 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
     const { limit, page, skip, sortBy, sortOrder } = paginationHelper_1.paginationHelpers.calculatePagination(paginationOptions);
     console.log(filters, "flitter");
     // Extract searchTerm to implement search query
-    const { category, searchTerm, startPrice, endPrice } = filters, filtersData = __rest(filters, ["category", "searchTerm", "startPrice", "endPrice"]);
+    const { category, searchTerm, colorName, startPrice, endPrice } = filters, filtersData = __rest(filters, ["category", "searchTerm", "colorName", "startPrice", "endPrice"]);
     const andConditions = [];
     // Search needs $or for searching in specified fields
     if (searchTerm) {
@@ -83,6 +83,21 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
                     },
                 };
             }),
+        });
+    }
+    // Filter by multiple colorNames
+    if (colorName) {
+        let colorArray = [];
+        if (typeof colorName === "string") {
+            colorArray = colorName.split(",").map((color) => color.trim());
+        }
+        else if (Array.isArray(colorName)) {
+            colorArray = colorName;
+        }
+        andConditions.push({
+            "color.colorName": {
+                $in: colorArray.map((color) => new RegExp(`^${color}$`, "i")),
+            },
         });
     }
     // Filters needs $and to fullfill all the conditions
@@ -122,6 +137,7 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
         discountedPrice: 1,
         inStock: 1,
         onSale: 1,
+        color: 1,
     });
     const total = yield Product_model_1.Product.countDocuments(whereConditions);
     return {
