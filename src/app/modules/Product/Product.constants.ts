@@ -6,6 +6,7 @@ export const ProductFilterableFields = [
   " category",
   "startPrice",
   "endPrice",
+  "colorName",
 ];
 
 export const ProductSearchableFields = [

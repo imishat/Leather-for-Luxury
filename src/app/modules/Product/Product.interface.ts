@@ -51,5 +51,6 @@ export type IProductFilters = {
   parentCategoryId?: Types.ObjectId;
   startPrice?: number;
   endPrice?: number;
+  colorName?: string | string[];
 };
 export type ProductModel = Model<IProduct, Record<string, unknown>>;

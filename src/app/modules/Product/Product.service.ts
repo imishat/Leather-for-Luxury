@@ -49,8 +49,14 @@ const getAll = async (
     paginationHelpers.calculatePagination(paginationOptions);
   console.log(filters, "flitter");
   // Extract searchTerm to implement search query
-  const { category, searchTerm, startPrice, endPrice, ...filtersData } =
-    filters;
+  const {
+    category,
+    searchTerm,
+    colorName,
+    startPrice,
+    endPrice,
+    ...filtersData
+  } = filters;
 
   const andConditions = [];
 
@@ -78,7 +84,22 @@ const getAll = async (
       }),
     });
   }
+  // Filter by multiple colorNames
+  if (colorName) {
+    let colorArray: string[] = [];
 
+    if (typeof colorName === "string") {
+      colorArray = colorName.split(",").map((color) => color.trim());
+    } else if (Array.isArray(colorName)) {
+      colorArray = colorName;
+    }
+
+    andConditions.push({
+      "color.colorName": {
+        $in: colorArray.map((color) => new RegExp(`^${color}$`, "i")),
+      },
+    });
+  }
   // Filters needs $and to fullfill all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
@@ -122,6 +143,7 @@ const getAll = async (
       discountedPrice: 1,
       inStock: 1,
       onSale: 1,
+      color: 1,
     });
 
   const total = await Product.countDocuments(whereConditions);
