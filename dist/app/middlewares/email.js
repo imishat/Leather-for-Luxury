@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendOrderEmail = exports.sendVerificationEmail = void 0;
+exports.sendOrderEmail = exports.sendVerificationUser = exports.sendVerificationEmail = void 0;
 const email_config_1 = require("./email.config");
 const emaleTemplate_1 = require("./emaleTemplate");
 const orderEmailTemplate_1 = require("./orderEmailTemplate");
@@ -29,6 +29,22 @@ const sendVerificationEmail = (email, verificationCode) => __awaiter(void 0, voi
     }
 });
 exports.sendVerificationEmail = sendVerificationEmail;
+const sendVerificationUser = (email, verificationCode) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const response = yield email_config_1.transporter.sendMail({
+            from: 'Leather For Luxury""<overseasreshan@gmail.com>',
+            to: email, // list of receivers
+            subject: "Verification", // Subject line
+            text: "Verification", // plain text body
+            html: emaleTemplate_1.Verification_User_Template.replace("{verificationCode}", verificationCode),
+        });
+        console.log("Email sent successfully:", response);
+    }
+    catch (error) {
+        console.error("Email error:", error);
+    }
+});
+exports.sendVerificationUser = sendVerificationUser;
 const sendOrderEmail = (email, Items, structuredOrderItems) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Generate the dynamic HTML for the order items

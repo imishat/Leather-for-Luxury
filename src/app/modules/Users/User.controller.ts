@@ -16,6 +16,26 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+export const verifyEmail = catchAsync(async (req: Request, res: Response) => {
+  // Extract user ID from request parameters and update payload from request body
+  const { code } = req.body;
+  console.log(code, "code");
+  // Update the user profile using the service layer
+  const updatedUser = await UserService.verifyEmailService(code);
+
+  // If no user is found, throw an error
+  if (!updatedUser) {
+    throw new ApiError(httpStatus.NOT_FOUND, "User not found");
+  }
+
+  // Send a successful response
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User verify successfully",
+    data: updatedUser,
+  });
+});
 
 export const updateUSerProfile = catchAsync(
   async (req: Request, res: Response) => {
@@ -43,4 +63,5 @@ export const updateUSerProfile = catchAsync(
 export const USerController = {
   createUser,
   updateUSerProfile,
+  verifyEmail,
 };

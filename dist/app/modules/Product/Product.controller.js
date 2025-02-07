@@ -69,7 +69,7 @@ exports.updateProductById = (0, catchAsync_1.catchAsync)((req, res) => __awaiter
     const updatedCategory = yield Product_service_1.ProductService.updateProductId(id, updateData);
     // Handle case where the category is not found
     if (!updatedCategory) {
-        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Product  not found");
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Product  not found ");
     }
     // Send a successful response
     (0, sendResponse_1.default)(res, {
@@ -102,6 +102,19 @@ const deleteProduct = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 
         data: result,
     });
 }));
+const getAllUniqueColor = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Product_service_1.ProductService.getAllUniqueColors();
+    console.log("hlw", result);
+    if (!result) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "Colors not found");
+    }
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Unique colors retrieved successfully",
+        data: result,
+    });
+}));
 exports.ProductController = {
     createProduct,
     getSingleProductBySlug,
@@ -109,4 +122,5 @@ exports.ProductController = {
     updateProductById: exports.updateProductById,
     getAll,
     deleteProduct,
+    getAllUniqueColor,
 };

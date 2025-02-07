@@ -10,6 +10,9 @@ export type IUSer = {
   phone?: string;
   shippingAddress?: string;
   role?: string;
+  isVerified?: boolean;
+
+  verificationToken?: string;
 
   // Mongoose-specific methods
   isModified(path: string): boolean;

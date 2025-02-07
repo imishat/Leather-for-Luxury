@@ -24,4 +24,5 @@ Product_controller_1.ProductController.deleteProduct);
 router.post("/rating", (0, validateRequest_1.default)(Rating_validation_1.RatingZODSchema), 
 // auth(ENUM_USER_ROLE.USER),
 Rating_controller_1.RatingController.createRating);
+router.get("/all/colors", Product_controller_1.ProductController.getAllUniqueColor);
 exports.ProductRoutes = router;
