@@ -40,6 +40,7 @@ const getSingleBySlug = (slug) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const getSingleById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Product_model_1.Product.findById(id);
+    console.log(result);
     return result;
 });
 const updateProductId = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -59,8 +60,11 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
     const { limit, page, skip, sortBy, sortOrder } = paginationHelper_1.paginationHelpers.calculatePagination(paginationOptions);
     console.log(filters, "flitter");
     // Extract searchTerm to implement search query
-    const { category, searchTerm, colorName, startPrice, endPrice } = filters, filtersData = __rest(filters, ["category", "searchTerm", "colorName", "startPrice", "endPrice"]);
+    const { category, searchTerm, colorName, startPrice, endPrice, inStock, onSale } = filters, filtersData = __rest(filters, ["category", "searchTerm", "colorName", "startPrice", "endPrice", "inStock", "onSale"]);
     const andConditions = [];
+    // Convert inStock & onSale to boolean
+    const isInStock = String(inStock) === "true";
+    const isOnSale = String(onSale) === "true";
     // Search needs $or for searching in specified fields
     if (searchTerm) {
         andConditions.push({
@@ -100,7 +104,7 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
             },
         });
     }
-    // Filters needs $and to fullfill all the conditions
+    // Filters needs $and to fullfil all the conditions
     if (Object.keys(filtersData).length) {
         andConditions.push({
             $and: Object.entries(filtersData).map(([field, value]) => ({
@@ -116,6 +120,15 @@ const getAll = (filters, paginationOptions) => __awaiter(void 0, void 0, void 0,
                 $lte: endPrice, // Less than or equal to endPrice
             },
         });
+    }
+    // Dynamically filter products if either inStock or onSale is true
+    if (isInStock || isOnSale) {
+        const stockSaleFilter = [];
+        if (isInStock)
+            stockSaleFilter.push({ inStock: true });
+        if (isOnSale)
+            stockSaleFilter.push({ onSale: true });
+        andConditions.push({ $or: stockSaleFilter });
     }
     // Dynamic  Sort needs  field to  do sorting
     const sortConditions = {};
@@ -156,6 +169,24 @@ const deleteProductFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
     const result = yield Product_model_1.Product.findByIdAndDelete({ _id: id });
     return result;
 });
+const getAllUniqueColors = () => __awaiter(void 0, void 0, void 0, function* () {
+    const uniqueColors = yield Product_model_1.Product.aggregate([
+        { $unwind: "$color" },
+        {
+            $group: {
+                _id: "$color.colorName",
+                firstHex: { $first: "$color.hex" },
+                productCount: { $sum: 1 },
+            },
+        },
+        { $sort: { _id: 1 } },
+    ]);
+    return uniqueColors.map((color) => ({
+        colorName: color._id,
+        Hex: color.firstHex,
+        productCount: color.productCount,
+    }));
+});
 exports.ProductService = {
     createProduct,
     getSingleBySlug,
@@ -163,4 +194,5 @@ exports.ProductService = {
     updateProductId: exports.updateProductId,
     getAll,
     deleteProductFromDB,
+    getAllUniqueColors,
 };

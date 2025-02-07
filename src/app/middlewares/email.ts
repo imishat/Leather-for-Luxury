@@ -3,6 +3,7 @@ import { IProduct } from "../modules/Product/Product.interface";
 import { transporter } from "./email.config";
 import {
   Verification_Email_Template,
+  Verification_User_Template,
   Welcome_Email_Template,
 } from "./emaleTemplate";
 import { Order_Email_Template } from "./orderEmailTemplate";
@@ -18,6 +19,26 @@ export const sendVerificationEmail = async (
       subject: "Order Track Code", // Subject line
       text: "Order Track Code", // plain text body
       html: Verification_Email_Template.replace(
+        "{verificationCode}",
+        verificationCode
+      ),
+    });
+    console.log("Email sent successfully:", response);
+  } catch (error) {
+    console.error("Email error:", error);
+  }
+};
+export const sendVerificationUser = async (
+  email: string,
+  verificationCode: string
+): Promise<void> => {
+  try {
+    const response = await transporter.sendMail({
+      from: 'Leather For Luxury""<overseasreshan@gmail.com>',
+      to: email, // list of receivers
+      subject: "Verification", // Subject line
+      text: "Verification", // plain text body
+      html: Verification_User_Template.replace(
         "{verificationCode}",
         verificationCode
       ),

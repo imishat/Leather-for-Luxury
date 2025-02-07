@@ -52,5 +52,7 @@ export type IProductFilters = {
   startPrice?: number;
   endPrice?: number;
   colorName?: string | string[];
+  inStock?: boolean;
+  onSale?: boolean;
 };
 export type ProductModel = Model<IProduct, Record<string, unknown>>;

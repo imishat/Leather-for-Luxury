@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.USerController = exports.updateUSerProfile = void 0;
+exports.USerController = exports.updateUSerProfile = exports.verifyEmail = void 0;
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = require("../../shared/catchAsync");
 const sendResponse_1 = __importDefault(require("../../shared/sendResponse "));
@@ -26,6 +26,24 @@ const createUser = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, 
         success: true,
         message: "User Created successfully",
         data: result,
+    });
+}));
+exports.verifyEmail = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // Extract user ID from request parameters and update payload from request body
+    const { code } = req.body;
+    console.log(code, "code");
+    // Update the user profile using the service layer
+    const updatedUser = yield Users_service_1.UserService.verifyEmailService(code);
+    // If no user is found, throw an error
+    if (!updatedUser) {
+        throw new ApiError_1.default(http_status_1.default.NOT_FOUND, "User not found");
+    }
+    // Send a successful response
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "User verify successfully",
+        data: updatedUser,
     });
 }));
 exports.updateUSerProfile = (0, catchAsync_1.catchAsync)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -48,4 +66,5 @@ exports.updateUSerProfile = (0, catchAsync_1.catchAsync)((req, res) => __awaiter
 exports.USerController = {
     createUser,
     updateUSerProfile: exports.updateUSerProfile,
+    verifyEmail: exports.verifyEmail,
 };

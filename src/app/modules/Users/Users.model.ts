@@ -16,7 +16,10 @@ const UserSchema = new Schema<IUSer, UserModel>(
     password: { type: String, required: true, select: 0 },
     phone: { type: String, required: false, select: 0 },
     shippingAddress: { type: String, required: false, select: 0 },
+
+    verificationToken: { type: String },
   },
+
   {
     timestamps: true, // Adds createdAt and updatedAt fields
   }

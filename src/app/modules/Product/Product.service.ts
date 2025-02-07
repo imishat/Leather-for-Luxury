@@ -56,11 +56,17 @@ const getAll = async (
     colorName,
     startPrice,
     endPrice,
+    inStock,
+    onSale,
     ...filtersData
   } = filters;
 
   const andConditions = [];
 
+  // Convert inStock & onSale to boolean
+
+  const isInStock = String(inStock) === "true";
+  const isOnSale = String(onSale) === "true";
   // Search needs $or for searching in specified fields
   if (searchTerm) {
     andConditions.push({
@@ -101,7 +107,7 @@ const getAll = async (
       },
     });
   }
-  // Filters needs $and to fullfill all the conditions
+  // Filters needs $and to fullfil all the conditions
   if (Object.keys(filtersData).length) {
     andConditions.push({
       $and: Object.entries(filtersData).map(([field, value]) => ({
@@ -118,6 +124,13 @@ const getAll = async (
         $lte: endPrice, // Less than or equal to endPrice
       },
     });
+  }
+  // Dynamically filter products if either inStock or onSale is true
+  if (isInStock || isOnSale) {
+    const stockSaleFilter: any[] = [];
+    if (isInStock) stockSaleFilter.push({ inStock: true });
+    if (isOnSale) stockSaleFilter.push({ onSale: true });
+    andConditions.push({ $or: stockSaleFilter });
   }
 
   // Dynamic  Sort needs  field to  do sorting
