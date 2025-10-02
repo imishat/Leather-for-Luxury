@@ -15,7 +15,7 @@ const createOder = async (payload: IOrder): Promise<IOrder | null> => {
   // Fetch the products by their IDs
   const productIds = payload.orderItems.map((item) => item.product);
   const products = await Product.find({ _id: { $in: productIds } });
-  console.log(products, "product");
+  // console.log(products, "product");
   // Ensure all products are found
   if (products.length !== productIds.length) {
     throw new ApiError(httpStatus.NOT_FOUND, "One or more products not found");
@@ -95,7 +95,6 @@ export const updateOrderId = async (
     new: true, // Return the updated document
     runValidators: true, // Enforce schema validations
   });
-
   if (result && trackCode) {
     const idData = result.email;
     await sendVerificationEmail(idData, trackCode);
@@ -197,7 +196,7 @@ const getAll = async (
   const whereConditions =
     andConditions.length > 0 ? { $and: andConditions } : {};
 
-  console.log("Query Conditions:", whereConditions);
+  // console.log("Query Conditions:", whereConditions);
   const result = await Order.find(whereConditions)
 
     .sort(sortConditions)

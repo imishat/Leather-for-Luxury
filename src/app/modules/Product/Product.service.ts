@@ -20,7 +20,7 @@ const getSingleBySlug = async (slug: string): Promise<IProduct | null> => {
 };
 const getSingleById = async (id: string) => {
   const result = await Product.findById(id);
-  console.log(result);
+  // console.log(result);
   return result;
 };
 
@@ -48,7 +48,7 @@ const getAll = async (
 ): Promise<IGenericResponse<IProduct[]>> => {
   const { limit, page, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(paginationOptions);
-  console.log(filters, "flitter");
+  // console.log(filters, "flitter");
   // Extract searchTerm to implement search query
   const {
     category,

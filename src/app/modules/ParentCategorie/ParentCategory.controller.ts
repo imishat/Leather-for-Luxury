@@ -29,7 +29,7 @@ const getSingleParentCategoryBySlug = catchAsync(
     const { slug } = req.params; // Destructure 'slug' from req.params
 
     // Log slug for debugging
-    console.log("Slug:", slug);
+    // console.log("Slug:", slug);
 
     // Validate that slug exists
     if (!slug) {
@@ -55,7 +55,7 @@ const getSingleParentCategoryBySlug = catchAsync(
 );
 const getSingleParentCategoryById = catchAsync(
   async (req: Request, res: Response) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const id = req.params.id;
 
     const result = await ParentCategoryService.getSingleById(id);

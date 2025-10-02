@@ -23,31 +23,35 @@ export const sendVerificationEmail = async (
         verificationCode
       ),
     });
-    console.log("Email sent successfully:", response);
+    // console.log("Email sent successfully:", response);
   } catch (error) {
     console.error("Email error:", error);
   }
 };
 export const sendVerificationUser = async (
   email: string,
-  verificationCode: string
+  name: string,
+  password: string
 ): Promise<void> => {
   try {
+    const htmlContent = Welcome_Email_Template
+      .replace("{name}", name)
+      .replace("{password}", password);
+
     const response = await transporter.sendMail({
-      from: 'Leather For Luxury""<overseasreshan@gmail.com>',
-      to: email, // list of receivers
-      subject: "Verification", // Subject line
-      text: "Verification", // plain text body
-      html: Verification_User_Template.replace(
-        "{verificationCode}",
-        verificationCode
-      ),
+      from: '"Leather For Luxury" <overseasreshan@gmail.com>',
+      to: email,
+      subject: "Welcome to Leather For Luxury 🎉",
+      text: `Hello ${name},\n\nThank you for signing up! Here is your password: ${password}`,
+      html: htmlContent,
     });
-    console.log("Email sent successfully:", response);
+
+    // console.log("✅ Email sent successfully:", response);
   } catch (error) {
-    console.error("Email error:", error);
+    console.error("❌ Email error:", error);
   }
 };
+
 
 export const sendOrderEmail = async (
   email: string,
@@ -98,7 +102,7 @@ export const sendOrderEmail = async (
       html: emailHTML, // Final email HTML with the dynamic content
     });
 
-    console.log("Email sent successfully:", response);
+    // console.log("Email sent successfully:", response);
   } catch (error) {
     console.error("Email error:", error);
     throw new Error("Failed to send email");

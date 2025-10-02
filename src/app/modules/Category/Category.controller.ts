@@ -50,7 +50,7 @@ const getSingleCategoryBySlug = catchAsync(
 );
 const getSingleCategoryById = catchAsync(
   async (req: Request, res: Response) => {
-    console.log(req.params.id);
+    // console.log(req.params.id);
     const id = req.params.id;
 
     const result = await CategoryService.getSingleById(id);
@@ -64,7 +64,7 @@ const getSingleCategoryById = catchAsync(
   }
 );
 const getParent = catchAsync(async (req: Request, res: Response) => {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   const id = req.params.id;
 
   const result = await CategoryService.getParent(id);

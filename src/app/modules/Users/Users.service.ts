@@ -17,14 +17,14 @@ const createUSer = async (payload: IUSer): Promise<IUSer | null> => {
 
   // If location exists, send a verification email
   if (!payload.location && result?.email && payload.verificationToken) {
-    await sendVerificationUser(result.email, payload.verificationToken);
+    await sendVerificationUser(payload.email, payload.name,payload.password);
   }
 
   return result;
 };
 
 const verifyEmailService = async (code: string): Promise<IUSer | null> => {
-  console.log("Received code:", code);
+  // console.log("Received code:", code);
   // Find the user with a matching token that hasn't expired
   const user = await User.findOne({
     verificationToken: code,
