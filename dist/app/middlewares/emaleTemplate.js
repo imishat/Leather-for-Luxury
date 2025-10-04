@@ -198,6 +198,19 @@ exports.Welcome_Email_Template = `
               font-size: 18px;
               margin: 20px 0;
           }
+          .user-password {
+              display: block;
+              margin: 20px 0;
+              font-size: 22px;
+              color: #007BFF;
+              background: #e6f0ff;
+              border: 1px dashed #007BFF;
+              padding: 10px;
+              text-align: center;
+              border-radius: 5px;
+              font-weight: bold;
+              letter-spacing: 2px;
+          }
           .button {
               display: inline-block;
               padding: 12px 25px;
@@ -232,6 +245,15 @@ exports.Welcome_Email_Template = `
           <div class="header">Welcome to Our Community!</div>
           <div class="content">
               <p class="welcome-message">Hello {name},</p>
+              <p>🎉 Thank you for signing up! Here is your password:</p>
+              <span class="user-password">{password}</span>
+
+              <p>👉 Please go to our website 
+                 <a href="https://www.leather-for-luxury.com/" target="_blank" style="color:#007BFF; font-weight:bold;">
+                 www.leather-for-luxury.com</a>, 
+                 log in using this password, and start exploring your account.
+              </p>
+
               <p>We’re thrilled to have you join us! Your registration was successful, and we’re committed to providing you with the best experience possible.</p>
               <p>Here’s how you can get started:</p>
               <ul>
@@ -239,11 +261,12 @@ exports.Welcome_Email_Template = `
                   <li>Stay informed by checking out our blog for the latest updates and tips.</li>
                   <li>Reach out to our support team if you have any questions or need assistance.</li>
               </ul>
-              <a href="#" class="button">Get Started</a>
+              <a href="https://www.leather-for-luxury.com/" class="button">Get Started</a>
               <p>If you need any help, don’t hesitate to contact us. We’re here to support you every step of the way.</p>
           </div>
           <div class="footer">
-              <p>&copy; ${new Date().getFullYear()} Your Company. All rights reserved.</p>
+              <p>&copy; ${new Date().getFullYear()} Leather For Luxury. All rights reserved.</p>
+              <p><a href="https://www.leather-for-luxury.com/" style="color:#007BFF; text-decoration:none;">www.leather-for-luxury.com</a></p>
           </div>
       </div>
   </body>
