@@ -19,7 +19,7 @@ const createUser = catchAsync(async (req: Request, res: Response) => {
 export const verifyEmail = catchAsync(async (req: Request, res: Response) => {
   // Extract user ID from request parameters and update payload from request body
   const { code } = req.body;
-  console.log(code, "code");
+  // console.log(code, "code");
   // Update the user profile using the service layer
   const updatedUser = await UserService.verifyEmailService(code);
 

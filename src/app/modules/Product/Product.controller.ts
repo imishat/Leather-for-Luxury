@@ -122,7 +122,7 @@ const deleteProduct = catchAsync(async (req: Request, res: Response) => {
 const getAllUniqueColor = catchAsync(async (req: Request, res: Response) => {
   const result = await ProductService.getAllUniqueColors();
 
-  console.log("hlw", result);
+  // console.log("hlw", result);
 
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, "Colors not found");
